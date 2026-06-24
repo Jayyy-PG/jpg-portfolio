@@ -1,0 +1,11 @@
+# Normalize line endings — repo stays LF, checkout stays native.
+* text=auto eol=lf
+
+# Binary assets — never touch.
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary

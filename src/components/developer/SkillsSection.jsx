@@ -1,0 +1,36 @@
+const markup = `<section class="skills reveal">
+  <div class="shell">
+    <div class="skills__head" data-parallax-y="-32" data-parallax-rx="-5">
+      <span class="eyebrow">02 / Stack</span>
+      <h2 class="skills__title">
+        <span data-show="en">Tools I use.</span>
+        <span data-show="de">Tools, die ich nutze.</span>
+      </h2>
+    </div>
+
+    <div class="skills__grid">
+      <div class="skill-card"><img alt="HTML" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" /><span class="skill-card__name">HTML</span><span class="skill-card__cap">Markup</span></div>
+      <div class="skill-card"><img alt="CSS" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" /><span class="skill-card__name">CSS</span><span class="skill-card__cap">Styling</span></div>
+      <div class="skill-card"><img alt="JavaScript" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" /><span class="skill-card__name">JavaScript</span><span class="skill-card__cap">Frontend / DOM</span></div>
+      <div class="skill-card"><img alt="Python" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" /><span class="skill-card__name">Python</span><span class="skill-card__cap">Tooling / Backend</span></div>
+      <div class="skill-card"><img alt="SQL" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" /><span class="skill-card__name">SQL</span><span class="skill-card__cap">Data</span></div>
+      <div class="skill-card"><img alt="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" /><span class="skill-card__name">Docker</span><span class="skill-card__cap">Containers</span></div>
+      <div class="skill-card"><img alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" /><span class="skill-card__name">Java</span><span class="skill-card__cap">OOP</span></div>
+      <div class="skill-card"><img alt="Node.js" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" /><span class="skill-card__name">Node.js</span><span class="skill-card__cap">Runtime</span></div>
+    </div>
+
+    <div class="skills__extra" data-parallax-y="22">
+      <span><strong data-show="en">Also:</strong><strong data-show="de">Auch:</strong></span>
+      <span class="chip">Git</span>
+      <span class="chip">Figma</span>
+      <span class="chip">Lightroom</span>
+      <span class="chip">Photoshop</span>
+      <span class="chip">InDesign</span>
+      <span class="chip">Premiere</span>
+    </div>
+  </div>
+</section>`;
+
+export default function SkillsSection() {
+  return <div dangerouslySetInnerHTML={{ __html: markup }} />;
+}

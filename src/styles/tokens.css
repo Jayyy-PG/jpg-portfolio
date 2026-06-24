@@ -1,0 +1,211 @@
+/* =========================================================================
+   Framer Design System — colors, type, spacing, radius, shadow
+   ========================================================================= */
+
+/* Mona Sans is our open-source substitute for GT Walsheim Medium.
+   Replace this @font-face block with a local GT-Walsheim-Medium.woff2 to
+   restore exact fidelity. */
+@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* ----- Brand & accent ----- */
+  --primary: #ffffff;
+  --on-primary: #000000;
+  --accent-blue: #0099ff;
+
+  /* ----- Surfaces (dark canvas system) ----- */
+  --canvas: #090909;
+  --surface-1: #141414;
+  --surface-2: #1c1c1c;
+  --hairline: #262626;
+  --hairline-soft: #1a1a1a;
+  --inverse-canvas: #ffffff;
+  --inverse-ink: #000000;
+
+  /* ----- Text ----- */
+  --ink: #ffffff;
+  --ink-muted: #999999;
+
+  /* ----- Semantic ----- */
+  --semantic-success: #22c55e;
+
+  /* ----- Brand gradients (cards, never section grounds) ----- */
+  --gradient-magenta: #d44df0;
+  --gradient-violet: #6a4cf5;
+  --gradient-orange: #ff7a3d;
+  --gradient-coral: #ff5577;
+
+  /* ----- Type families ----- */
+  --font-display: "GT Walsheim Medium", "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  /* Inter character variants — switching off visibly changes brand voice */
+  --inter-features: "cv01", "cv05", "cv09", "cv11", "ss03", "ss07", "dlig";
+
+  /* ----- Spacing (5/10/15/20/30 cadence — non-standard) ----- */
+  --space-hair: 1px;
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 15px;
+  --space-lg: 20px;
+  --space-xl: 30px;
+  --space-xxl: 40px;
+  --space-section: 96px;
+
+  /* ----- Radius ----- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 15px;
+  --radius-xl: 20px;
+  --radius-xxl: 30px;
+  --radius-pill: 100px;
+  --radius-full: 9999px;
+
+  /* ----- Shadows / elevation signatures ----- */
+  --shadow-flat: none;
+  --shadow-light-edge: inset 0 0.5px 0 rgba(255, 255, 255, 0.10), 0 10px 30px rgba(0, 0, 0, 0.25);
+  --ring-focus-blue: 0 0 0 1px rgba(0, 153, 255, 0.45), 0 0 0 4px rgba(0, 153, 255, 0.15);
+  --ring-selected: 0 0 0 1px rgba(0, 153, 255, 0.15);
+
+  /* ----- Motion ----- */
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+}
+
+/* =========================================================================
+   Type scale — apply via class on element
+   ========================================================================= */
+
+.t-display-xxl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 110px;
+  line-height: 0.85;
+  letter-spacing: -5.5px;
+}
+
+.t-display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 85px;
+  line-height: 0.95;
+  letter-spacing: -4.25px;
+  font-feature-settings: "ss02";
+}
+
+.t-display-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 62px;
+  line-height: 1.0;
+  letter-spacing: -3.1px;
+  font-feature-settings: "ss02";
+}
+
+.t-display-md {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.13;
+  letter-spacing: -1px;
+}
+
+.t-headline {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.20;
+  letter-spacing: -0.8px;
+  font-feature-settings: "cv05";
+}
+
+.t-subhead {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.30;
+  letter-spacing: -0.01px;
+  font-feature-settings: var(--inter-features);
+}
+
+.t-body-lg {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.30;
+  letter-spacing: -0.18px;
+  font-feature-settings: var(--inter-features);
+}
+
+.t-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.30;
+  letter-spacing: -0.15px;
+  font-feature-settings: var(--inter-features);
+}
+
+.t-body-sm {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.40;
+  letter-spacing: -0.14px;
+  font-feature-settings: var(--inter-features);
+}
+
+.t-caption {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.20;
+  letter-spacing: -0.13px;
+  font-feature-settings: var(--inter-features);
+}
+
+.t-micro {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.20;
+  letter-spacing: -0.12px;
+  font-feature-settings: var(--inter-features);
+}
+
+.t-button {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.0;
+  letter-spacing: -0.14px;
+  font-feature-settings: var(--inter-features);
+}
+
+/* =========================================================================
+   Page baseline — assume dark canvas
+   ========================================================================= */
+
+html, body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-feature-settings: var(--inter-features);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+::selection {
+  background: var(--accent-blue);
+  color: var(--ink);
+}
