@@ -17,7 +17,7 @@
 
 /* Native scrolling (zero input latency, compositor-driven). `smooth` only
    affects programmatic/anchor jumps — the wheel stays fully native. */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--canvas);

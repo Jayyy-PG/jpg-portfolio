@@ -363,23 +363,10 @@
 }
 
 @media (max-width: 760px) {
-  .gal-hero__inner {
-    grid-template-columns: 1fr;
-  }
-
-  .gal-hero__panel {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .gal-hero__panel div {
-    border-bottom: 0;
-    border-right: 1px solid var(--hairline);
-    padding: 18px;
-  }
-
-  .gal-hero__panel div:last-child {
-    border-right: 0;
-  }
+  /* Tighter hero so it isn't a big empty orange block on phones. */
+  .gal-hero { padding: 52px 0 64px; }
+  .gal-marquee__track span { font-size: 26px; gap: 38px; }
+  .gal-marquee__track span::after { margin-left: 38px; }
 
   .gal-row-head {
     grid-template-columns: 1fr;
