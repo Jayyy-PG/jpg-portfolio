@@ -762,7 +762,7 @@
 .work-heading {
   grid-column: 2 / 4;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+  grid-template-columns: 1fr;
   gap: 32px;
   align-items: end;
 }
@@ -795,11 +795,27 @@
   min-height: 100%;
 }
 
-.work-panel__intro p {
-  color: var(--ink-muted);
+.work-panel__intro-top {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(22px, 4vw, 40px);
+}
+.work-panel__mark svg {
+  width: clamp(46px, 5vw, 66px);
+  height: auto;
+  color: var(--accent);
+  opacity: 0.9;
+}
+/* The statement — brighter text, amber highlights on the key phrases. */
+.work-statement {
+  color: var(--ink);
   font-size: clamp(18px, 2vw, 26px);
-  line-height: 1.22;
+  line-height: 1.25;
   letter-spacing: -0.035em;
+}
+.work-statement strong {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .work-steps {
@@ -837,6 +853,19 @@
 }
 
 .work-step:hover::after { opacity: 0.7; }
+
+.work-step__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.work-step__icon svg {
+  width: 26px;
+  height: 26px;
+  color: var(--accent);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.work-step:hover .work-step__icon svg { transform: scale(1.12) rotate(-4deg); }
 
 .work-step__num {
   font-family: var(--font-mono);
