@@ -193,6 +193,29 @@ html[data-lang="de"] [data-show="de"] { display: revert !important; }
 
 .nav__right { display: flex; align-items: center; gap: 8px; }
 
+/* Hamburger — hidden on desktop, shown on mobile. */
+.nav__burger {
+  display: none;
+  width: 40px; height: 40px;
+  align-items: center; justify-content: center;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  color: var(--ink);
+}
+.nav__burger-box { position: relative; width: 18px; height: 12px; }
+.nav__burger-box span {
+  position: absolute; left: 0; width: 100%; height: 2px;
+  background: currentColor; border-radius: 2px;
+  transition: transform 240ms var(--ease-soft), opacity 200ms var(--ease-soft), top 240ms var(--ease-soft);
+}
+.nav__burger-box span:nth-child(1) { top: 0; }
+.nav__burger-box span:nth-child(2) { top: 5px; }
+.nav__burger-box span:nth-child(3) { top: 10px; }
+.nav--open .nav__burger-box span:nth-child(1) { top: 5px; transform: rotate(45deg); }
+.nav--open .nav__burger-box span:nth-child(2) { opacity: 0; }
+.nav--open .nav__burger-box span:nth-child(3) { top: 5px; transform: rotate(-45deg); }
+
 .lang {
   display: inline-flex; align-items: center;
   height: 32px; padding: 2px;
@@ -213,8 +236,39 @@ html[data-lang="de"] [data-show="de"] { display: revert !important; }
   background: var(--ink); color: var(--inverse-ink);
 }
 
-@media (max-width: 720px) {
-  .nav__links a { padding: 0 10px; font-size: 13px; }
+/* ----- Mobile nav: links collapse into a dropdown under the bar ----- */
+@media (max-width: 760px) {
+  .nav__burger { display: inline-flex; }
+
+  .nav__menu {
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: rgba(9, 9, 9, 0.98);
+    border-bottom: 1px solid var(--hairline-soft);
+    padding: 10px 0 18px;
+    opacity: 0; visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 260ms var(--ease-soft), transform 260ms var(--ease-soft), visibility 260ms;
+  }
+  .nav--open .nav__menu { opacity: 1; visibility: visible; transform: none; }
+
+  .nav__links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .nav__links li { width: 100%; }
+  .nav__links a {
+    height: 52px;
+    width: 100%;
+    padding: 0 18px;
+    font-size: 17px;
+    border-radius: 12px;
+  }
 }
 
 /* ============================================================
