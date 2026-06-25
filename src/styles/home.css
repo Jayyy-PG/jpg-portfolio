@@ -19,9 +19,9 @@
 .hero__safelight {
   position: absolute;
   border-radius: 50%;
-  filter: blur(50px);
+  filter: blur(46px);
+  /* Static (no parallax) — its own layer so nothing repaints it on scroll. */
   transform: translateZ(0);
-  will-change: transform;
 }
 /* The lamp: warm amber wash from the upper right, like a darkroom safelight. */
 .hero__safelight--high {
@@ -54,12 +54,16 @@
 /* A clean rectangle inset from the viewport, aligned to the content width, so
    all four corners frame the intro with even breathing room. */
 .hero__marks {
+  --mi: clamp(14px, 2.4vw, 30px);
   position: absolute;
-  top: clamp(14px, 2.4vw, 30px);
-  bottom: clamp(14px, 2.4vw, 30px);
+  top: var(--mi);
   left: 50%;
   transform: translateX(-50%);
   width: min(calc(100% - 40px), 1460px);
+  /* Height is locked to the FIRST screen (hero top sits just under the 64px
+     nav), so the bottom pair always frames the intro even if the hero grows
+     taller than the viewport. */
+  height: calc(100vh - 64px - 2 * var(--mi));
   z-index: 1;
   pointer-events: none;
 }
@@ -134,7 +138,7 @@
 }
 
 .hero__logo-reveal {
-  width: clamp(190px, 25vw, 360px);
+  width: clamp(150px, 16vw, 250px);
   aspect-ratio: 779 / 815;
   display: inline-flex;
   align-items: center;
@@ -226,10 +230,10 @@
 
 /* Name — the typographic anchor under the mark. */
 .hero__fullname {
-  margin-top: 22px;
+  margin-top: 16px;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(30px, 3.8vw, 52px);
+  font-size: clamp(26px, 3.2vw, 44px);
   line-height: 0.98;
   letter-spacing: -0.035em;
   color: var(--ink);
@@ -259,7 +263,7 @@
 /* Thesis — the "develop both" pun. Kept lighter than the name so it reads as
    a sub-statement; the two develop-meanings glow amber. */
 .hero__tagline {
-  margin-top: 26px;
+  margin-top: 20px;
   max-width: 20ch;
   font-family: var(--font-display);
   font-weight: 500;
@@ -275,7 +279,7 @@
 }
 
 .hero__cta {
-  margin-top: 32px;
+  margin-top: 26px;
   display: flex; gap: 12px; flex-wrap: wrap;
   justify-content: center;
 }
@@ -292,7 +296,11 @@
 .hero__portrait { display: flex; align-items: center; justify-content: center; }
 .hero__portrait-wrap {
   position: relative;
-  width: 100%;
+  /* Height-capped so the photo (and the whole hero) stays inside one screen;
+     width follows the 4:5 aspect. */
+  height: min(58vh, 540px);
+  width: auto;
+  max-width: 100%;
   aspect-ratio: 4 / 5;
   margin: 0 auto;
   border-radius: 4px;
@@ -313,7 +321,7 @@
   z-index: 2;
   pointer-events: none;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(255, 122, 61, 0.32);
+  box-shadow: inset 0 0 0 2px rgba(255, 122, 61, 0.5);
 }
 
 .hero__portrait-glow {
@@ -335,9 +343,12 @@
   padding: 32px;
   display: flex; flex-direction: column; gap: 18px;
   opacity: 0;
-  transform: translateY(20px) scale(0.98);
+  /* Translate only — no scale. Scaling a large box full of text + an image +
+     a glow forces an expensive re-rasterization every frame (that was the
+     "More about me" jank). Translate + opacity stay on the compositor. */
+  transform: translateY(16px);
   pointer-events: none;
-  transition: opacity 500ms var(--ease-soft) 200ms, transform 500ms var(--ease-soft) 200ms;
+  transition: opacity 340ms var(--ease-soft), transform 340ms var(--ease-soft);
   z-index: 1;
 }
 .hero__aboutbox::before {
@@ -437,7 +448,7 @@
   grid-column: 1 / -1;
   grid-row: 1 / 2;
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: none;
   pointer-events: auto;
   min-height: min(66vh, 720px);
   padding: clamp(28px, 4vw, 56px);

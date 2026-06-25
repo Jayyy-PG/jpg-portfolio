@@ -85,9 +85,9 @@ html[data-lang="de"] [data-show="de"] { display: revert !important; }
   position: fixed;
   top: 0; left: 0; right: 0;
   height: 64px;
-  background: rgba(9, 9, 9, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(9, 9, 9, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--hairline-soft);
   z-index: 50;
 }

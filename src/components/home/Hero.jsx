@@ -15,8 +15,8 @@ export default function Hero() {
       <section className="hero" id="top" data-state={state}>
         {/* Darkroom atmosphere — amber safelight + film grain, no colour blobs */}
         <div className="hero__atmos" aria-hidden="true">
-          <span className="hero__safelight hero__safelight--high" data-parallax-y="70" data-parallax-x="-24" />
-          <span className="hero__safelight hero__safelight--low" data-parallax-y="-90" data-parallax-x="30" />
+          <span className="hero__safelight hero__safelight--high" />
+          <span className="hero__safelight hero__safelight--low" />
           <span className="hero__grain" />
         </div>
 
