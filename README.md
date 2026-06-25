@@ -30,7 +30,7 @@ Import the repository at [vercel.com/new](https://vercel.com/new). The framework
 
 [`public/_redirects`](public/_redirects) keeps direct visits to `/developer` and `/gallery` working on static hosts.
 
-> After the first deploy, replace `https://jpg-portfolio.vercel.app/` in [`index.html`](index.html) and [`public/sitemap.xml`](public/sitemap.xml) with your real domain.
+Live at **[jaygrenacher.ch](https://jaygrenacher.ch/)** (custom domain via Hostpoint DNS → Vercel).
 
 ## Project structure
 
