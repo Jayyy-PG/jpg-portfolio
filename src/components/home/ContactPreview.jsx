@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react';
-
 const email = 'jaygrenacher.ch@gmail.com';
 
 function ContactIcon({ type }) {
@@ -17,85 +15,53 @@ function ContactIcon({ type }) {
 }
 
 export default function ContactPreview() {
-  const formRef = useRef(null);
-
-  useEffect(() => {
-    const form = formRef.current;
-    if (!form) return undefined;
-
-    const onSubmit = (event) => {
-      event.preventDefault();
-      const status = form.querySelector('.contact-form__status');
-      const data = Object.fromEntries(new FormData(form));
-      if (!data.name || !data.email || !data.message) {
-        status.textContent = (document.documentElement.dataset.lang === 'de')
-          ? 'Bitte fülle Name, E-Mail und Nachricht aus.'
-          : 'Please fill name, email and message.';
-        status.dataset.tone = 'err';
-        return;
-      }
-      const subject = encodeURIComponent(data.subject || 'Hi JPG - from your portfolio');
-      const body = encodeURIComponent('Name: ' + data.name + '\nEmail: ' + data.email + '\n\n' + data.message + '\n\n- sent via jpg.portfolio');
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-      status.textContent = (document.documentElement.dataset.lang === 'de')
-        ? 'Dein Mail-Programm öffnet sich. Danke!'
-        : 'Your mail app should open. Thanks!';
-      status.dataset.tone = 'ok';
-      form.reset();
-    };
-
-    form.addEventListener('submit', onSubmit);
-    return () => form.removeEventListener('submit', onSubmit);
-  }, []);
-
   return (
     <section className="section section--contact reveal" id="contact">
       <div className="shell section__grid">
-        <div className="section__num" data-parallax-y="-12">04 / 04</div>
-        <h2 className="section__title" data-parallax-y="-24">
-          <span data-show="en">Say hi.</span>
-          <span data-show="de">Sag hi.</span>
+        <div className="section__num">04 / 04</div>
+        <h2 className="section__title">
+          <span data-show="en">Let's talk.</span>
+          <span data-show="de">Sag hallo.</span>
         </h2>
-        <p className="section__lead" data-parallax-y="-14">
-          <span data-show="en">Got a project, a role at your company, or just want to talk shop? Drop a line.</span>
-          <span data-show="de">Projekt, offene Stelle in deiner Firma oder einfach Lust zu plaudern? Schreib mir.</span>
+        <p className="section__lead">
+          <span data-show="en">Open to internships, dev roles and freelance briefs — or just a chat about code, photography or motorsport. The fastest way to reach me is email.</span>
+          <span data-show="de">Offen für Praktika, Dev-Stellen und Freelance-Aufträge — oder einfach ein Austausch über Code, Fotografie oder Motorsport. Am schnellsten erreichst du mich per E-Mail.</span>
         </p>
 
-        <form className="contact-form" id="contact-form" ref={formRef} noValidate>
-          <div className="contact-form__row">
-            <label>
-              <span data-show="en">Name</span><span data-show="de">Name</span>
-              <input type="text" name="name" required autoComplete="name" />
-            </label>
-            <label>
-              <span data-show="en">Email</span><span data-show="de">E-Mail</span>
-              <input type="email" name="email" required autoComplete="email" />
-            </label>
-          </div>
-          <label className="contact-form__full">
-            <span data-show="en">Subject</span><span data-show="de">Betreff</span>
-            <input type="text" name="subject" />
-          </label>
-          <label className="contact-form__full">
-            <span data-show="en">Message</span><span data-show="de">Nachricht</span>
-            <textarea name="message" rows="6" required />
-          </label>
+        <div className="contact-card section__media">
+          <span className="eyebrow eyebrow--accent">
+            <span data-show="en">Available for internships</span>
+            <span data-show="de">Verfügbar für Praktika</span>
+          </span>
 
-          <div className="contact-form__foot">
-            <div className="contact-links" aria-label="Social links">
-              <a className="contact-form__alt" href={`mailto:${email}`}><ContactIcon type="mail" />{email}</a>
-              <a className="contact-form__alt" href="https://github.com/Jayyy-PG" target="_blank" rel="noopener noreferrer"><ContactIcon type="github" />GitHub</a>
-              <a className="contact-form__alt" href="https://www.instagram.com/jayyy_p.g/" target="_blank" rel="noopener noreferrer"><ContactIcon type="instagram" />Instagram</a>
-            </div>
-            <button className="btn btn--lg" type="submit">
-              <span data-show="en">Send message</span>
-              <span data-show="de">Nachricht senden</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-            </button>
+          <a className="contact-card__mail" href={`mailto:${email}`}>
+            <span className="contact-card__mail-label">
+              <ContactIcon type="mail" />
+              <span data-show="en">Write me an email</span>
+              <span data-show="de">Schreib mir eine E-Mail</span>
+            </span>
+            <span className="contact-card__mail-addr">{email}</span>
+            <svg className="contact-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </a>
+
+          <div className="contact-card__socials">
+            <a className="contact-card__social" href="https://github.com/Jayyy-PG" target="_blank" rel="noopener noreferrer">
+              <ContactIcon type="github" />GitHub
+            </a>
+            <a className="contact-card__social" href="https://www.instagram.com/jayyy_p.g/" target="_blank" rel="noopener noreferrer">
+              <ContactIcon type="instagram" />Instagram
+            </a>
           </div>
 
-          <div className="contact-form__status" role="status" aria-live="polite" />
-        </form>
+          <div className="contact-card__meta">
+            <span>Aargau · CH</span>
+            <span className="contact-card__dot" aria-hidden="true" />
+            <span data-show="en">Usually replies within a day</span>
+            <span data-show="de">Antwortet meist innert eines Tages</span>
+          </div>
+        </div>
       </div>
     </section>
   );

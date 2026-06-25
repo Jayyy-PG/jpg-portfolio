@@ -314,8 +314,7 @@ html[data-lang="de"] [data-show="de"] { display: revert !important; }
 .footer__meta a:hover { color: var(--ink); }
 .footer__copy { color: var(--ink-muted); font-size: 12px; letter-spacing: 0.05em; }
 
-.footer__link,
-.contact-form__alt {
+.footer__link {
   display: inline-flex;
   align-items: center;
   gap: 9px;
