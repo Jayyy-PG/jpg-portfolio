@@ -85,9 +85,10 @@ html[data-lang="de"] [data-show="de"] { display: revert !important; }
   position: fixed;
   top: 0; left: 0; right: 0;
   height: 64px;
-  background: rgba(9, 9, 9, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Near-opaque, NO backdrop-filter. A fixed backdrop-blur re-samples and
+     re-blurs everything behind the bar every scroll frame — that was the
+     "laggy only at the very top" cost (worst over the heavy gallery hero). */
+  background: rgba(9, 9, 9, 0.92);
   border-bottom: 1px solid var(--hairline-soft);
   z-index: 50;
 }

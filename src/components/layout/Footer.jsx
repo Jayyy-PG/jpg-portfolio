@@ -25,7 +25,7 @@ export default function Footer() {
           <a className="footer__link" href={`mailto:${email}`}><Icon type="mail" />{email}</a>
           <a className="footer__link" href="https://github.com/Jayyy-PG" target="_blank" rel="noopener noreferrer"><Icon type="github" />github.com/Jayyy-PG</a>
           <a className="footer__link" href="https://www.instagram.com/jayyy_p.g/" target="_blank" rel="noopener noreferrer"><Icon type="instagram" />instagram / @jayyy_p.g</a>
-          <p className="footer__copy">(c) 2026 Jay Patric Grenacher / Aargau, CH</p>
+          <p className="footer__copy">© 2026 Jay Patric Grenacher / Aargau, CH</p>
         </div>
       </div>
     </footer>
