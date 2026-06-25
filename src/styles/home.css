@@ -11,6 +11,11 @@
   padding: 24px 0;
   overflow: hidden;
   isolation: isolate;
+  /* Vertically center the content block in the frame, robustly, whatever the
+     window height (absolute atmos/marks/scroll stay out of this flow). */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ----- Darkroom atmosphere: amber safelight + film grain ----- */
@@ -88,10 +93,9 @@
 
 .hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 560px);
-  grid-template-rows: 1fr;
-  min-height: calc(100vh - 112px);
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 580px);
   gap: 24px 60px;
+  width: 100%;
   position: relative;
   z-index: 2;
   align-items: center;
@@ -140,7 +144,7 @@
 }
 
 .hero__logo-reveal {
-  width: clamp(150px, 16vw, 250px);
+  width: clamp(172px, 18vw, 300px);
   aspect-ratio: 779 / 815;
   display: inline-flex;
   align-items: center;
@@ -300,7 +304,7 @@
   position: relative;
   /* Height-capped so the photo (and the whole hero) stays inside one screen;
      width follows the 4:5 aspect. */
-  height: min(64vh, 600px);
+  height: min(68vh, 660px);
   width: auto;
   max-width: 100%;
   aspect-ratio: 4 / 5;
@@ -472,6 +476,7 @@
 }
 
 @media (max-width: 900px) {
+  .hero { display: block; }
   .hero__grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
