@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="GlattTube">
+  <defs>
+    <radialGradient id="gt-bg" cx="32%" cy="24%" r="95%">
+      <stop offset="0" stop-color="#1b1b1f"/>
+      <stop offset="1" stop-color="#0a0a0c"/>
+    </radialGradient>
+    <radialGradient id="gt-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#e8362c" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#e0322a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#e0322a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="gt-blur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="512" height="512" rx="118" fill="url(#gt-bg)"/>
+  <rect x="2.5" y="2.5" width="507" height="507" rx="116" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="2"/>
+
+  <!-- warm red glow, lower right -->
+  <circle cx="372" cy="312" r="120" fill="url(#gt-glow)" filter="url(#gt-blur)"/>
+
+  <!-- GT. wordmark -->
+  <g font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="248" letter-spacing="-14">
+    <text x="244" y="256" text-anchor="middle" dominant-baseline="central">
+      <tspan fill="#e8362c">G</tspan><tspan fill="#ffffff">T</tspan>
+    </text>
+  </g>
+  <circle cx="404" cy="330" r="26" fill="#e8362c"/>
+</svg>

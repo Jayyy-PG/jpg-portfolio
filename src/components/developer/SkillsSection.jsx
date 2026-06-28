@@ -19,12 +19,16 @@ const markup = `<section class="skills reveal">
       <div class="skill-card"><img alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" /><span class="skill-card__name">Java</span><span class="skill-card__cap">OOP</span></div>
     </div>
 
-    <div class="skills__extra" data-parallax-y="22">
+    <div class="skills__extra">
       <span><strong data-show="en">Also:</strong><strong data-show="de">Auch:</strong></span>
       <span class="chip">Git</span>
-      <span class="chip">Figma</span>
-      <span class="chip">Lightroom</span>
+      <span class="chip">Docker</span>
+    </div>
+    <div class="skills__extra">
+      <span><strong data-show="en">Video &amp; Photo Editing:</strong><strong data-show="de">Video- &amp; Bildbearbeitung:</strong></span>
       <span class="chip">Photoshop</span>
+      <span class="chip">DaVinci Resolve</span>
+      <span class="chip">Lightroom</span>
       <span class="chip">InDesign</span>
       <span class="chip">Premiere</span>
     </div>

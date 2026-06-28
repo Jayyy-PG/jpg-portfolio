@@ -34,15 +34,15 @@ const projects = [
       { name: 'Vercel', icon: `${DEVICON}/vercel/vercel-original.svg`, invert: true },
     ],
     note: {
-      en: '180+ modules · strict TypeScript · type-check, lint & tests (Vitest, Playwright) run before every deploy · Lighthouse 100 / 96.',
-      de: '180+ Module · striktes TypeScript · Typprüfung, Linting & Tests (Vitest, Playwright) vor jedem Deploy · Lighthouse 100 / 96.',
+      en: '180+ modules · strict TypeScript · type-check, lint & tests (Vitest, Playwright) run before every deploy · Lighthouse 100 desktop / 96 mobile.',
+      de: '180+ Module · striktes TypeScript · Typprüfung, Linting & Tests (Vitest, Playwright) vor jedem Deploy · Lighthouse 100 Desktop / 96 Mobile.',
     },
   },
   {
     id: 'glatttube',
     num: '02',
     name: 'GlattTube',
-    media: '/images/projects/glatttube.png',
+    media: '/images/projects/glatttube.svg',
     fit: 'contain',
     alt: true,
     tag: { en: 'Desktop · Media hub', de: 'Desktop · Media-Hub' },
@@ -50,7 +50,7 @@ const projects = [
       en: 'A fast, elegant desktop media hub for Windows — turns scattered videos, images and sounds into a tidy, searchable library, with a player, editing, compression and a downloader.',
       de: 'Ein schneller, eleganter Desktop-Media-Hub für Windows — macht aus verstreuten Videos, Bildern und Sounds eine aufgeräumte, durchsuchbare Mediathek, mit Player, Schnitt, Komprimierung und Downloader.',
     },
-    cta: { type: 'link', href: 'https://github.com/Jayyy-PG/GlattHUB-Releases' },
+    cta: { type: 'link', href: 'https://github.com/Jayyy-PG/glatttube-releases' },
     features: [
       { en: 'Media library for video, images & sounds (virtualized grid)', de: 'Mediathek für Video, Bilder & Sounds (virtualisiertes Raster)' },
       { en: 'Automatic folder organization + live folder watching', de: 'Automatische Ordner-Organisation + Live-Überwachung' },
@@ -66,9 +66,6 @@ const projects = [
       { name: 'TypeScript', icon: `${DEVICON}/typescript/typescript-original.svg` },
       { name: 'Tailwind', icon: `${DEVICON}/tailwindcss/tailwindcss-original.svg` },
       { name: 'SQLite', icon: `${DEVICON}/sqlite/sqlite-original.svg` },
-      { name: 'Zustand' },
-      { name: 'FFmpeg' },
-      { name: 'yt-dlp' },
     ],
     note: {
       en: 'Local-first desktop app · all data stays under %APPDATA% · packaged with electron-builder · FFmpeg & yt-dlp bundled.',
@@ -132,10 +129,6 @@ function ProjectCard({ project, open, onToggle }) {
 
       <div className="project__copy">
         <h3 className="project__name">{project.name}</h3>
-        <span className="project__tag">
-          <span data-show="en">{project.tag.en}</span>
-          <span data-show="de">{project.tag.de}</span>
-        </span>
         <p className="project__lead" data-show="en">{project.lead.en}</p>
         <p className="project__lead" data-show="de">{project.lead.de}</p>
 

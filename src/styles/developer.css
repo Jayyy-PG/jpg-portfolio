@@ -268,6 +268,7 @@
   gap: 8px;
   color: var(--ink-muted);
 }
+.skills__extra + .skills__extra { margin-top: 14px; }
 
 .skills__extra strong {
   color: var(--ink);
@@ -432,15 +433,15 @@
   flex: 0 0 auto;
 }
 
-/* Per-project accent: 01 purple, 02 orange, 03 green. */
+/* Per-project accent: 01 purple, 02 GlattTube red (matches its logo), 03 green. */
 .project:nth-of-type(1) {
   --proj-accent: #d44df0;
   --proj-accent-rgb: 212, 77, 240;
 }
 
 .project:nth-of-type(2) {
-  --proj-accent: #ff7a3d;
-  --proj-accent-rgb: 255, 122, 61;
+  --proj-accent: #e8362c;
+  --proj-accent-rgb: 232, 54, 44;
 }
 
 .project:nth-of-type(3) {
