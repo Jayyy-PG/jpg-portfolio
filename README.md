@@ -1,69 +1,126 @@
+<div align="center">
+
+<img src="docs/jpg-portfolio-logo.webp" width="170" alt="JPG Portfolio Logo" />
+
 # JPG Portfolio
 
-Personal portfolio of **Jay Patric Grenacher** — software engineer & photographer from Aargau, Switzerland. Built as a fast, static single-page site with bilingual (EN/DE) content, a developer page, and a photo gallery.
+**Personal developer and photography portfolio**
 
-**Stack:** Vite + React 19, hand-written CSS (no framework), zero runtime dependencies beyond React. Deploys as a static site.
+A fast, bilingual portfolio showcasing my software development projects, technical skills and photography work.
 
-## Develop
+[Live Website](https://jaygrenacher.ch)
 
-```bash
-npm install
-npm run dev      # http://localhost:5173
-```
+</div>
 
-## Build & preview
+---
 
-```bash
-npm run build    # outputs to dist/
-npm run preview  # serve the production build locally
-```
+## About
 
-## Deploy
+This is my personal portfolio website, built to bring together my two main creative and technical interests: **software development and photography**.
 
-### Vercel (recommended)
-Import the repository at [vercel.com/new](https://vercel.com/new). The framework is detected as **Vite** automatically; [`vercel.json`](vercel.json) handles SPA routing, caching, and security headers. No environment variables are required.
+The website includes a dedicated developer section for my software projects as well as a photography gallery showcasing selected work and camera information.
 
-### Cloudflare Pages (also works)
-- Framework preset: **Vite**
-- Build command: `npm run build`
-- Output directory: `dist`
+The goal was to create a portfolio that feels personal and visually distinctive while remaining fast, responsive and accessible.
 
-[`public/_redirects`](public/_redirects) keeps direct visits to `/developer` and `/gallery` working on static hosts.
+---
 
-Live at **[jaygrenacher.ch](https://jaygrenacher.ch/)** (custom domain via Hostpoint DNS → Vercel).
+## Preview
 
-## Project structure
+![JPG Portfolio Preview](docs/portfolio-preview.webp)
 
-```
+---
+
+## Features
+
+- Bilingual content in English and German
+- Dedicated developer portfolio
+- Photography gallery
+- Responsive desktop and mobile layouts
+- Custom animations and scroll interactions
+- Reduced-motion support
+- Semantic and keyboard-accessible interface
+- Custom design system using hand-written CSS
+- Static deployment without a backend
+
+---
+
+## Tech Stack
+
+| Area | Technology |
+| --- | --- |
+| Frontend | React 19 |
+| Build Tool | Vite |
+| Languages | JavaScript, HTML, CSS |
+| Styling | Custom CSS |
+| Hosting | Vercel |
+| Version Control | Git and GitHub |
+
+The project intentionally uses **no UI framework**. The visual design, responsive layout and animations are implemented with custom CSS.
+
+---
+
+## Project Structure
+
+```text
 src/
-  App.jsx              # tiny client-side router (/, /developer, /gallery)
-  pages/               # Home, Developer, Gallery
-  components/          # home/, developer/, gallery/, layout/
-  data/                # photos.js, projects.js, skills.js, navigation.js
-  styles/              # tokens.css, global.css, home.css, developer.css, gallery.css
-  utils/
-    scrollReveal.js    # IntersectionObserver reveals + cached-position parallax
-    imageSlots.js      # <image-slot> custom element (read-only on the live site)
-public/images/         # static images shipped as-is
-```
+├── components/
+│   ├── home/
+│   ├── developer/
+│   ├── gallery/
+│   └── layout/
+├── data/
+├── pages/
+├── styles/
+└── utils/
 
-## Editing content
+public/
+└── images/
+    ├── logos/
+    ├── projects/
+    ├── gallery/
+    └── placeholders/
 
-- **Gallery photos & EXIF** — `src/data/photos.js` (title, series, camera, lens, iso, aperture, shutter, focal, date, desc, src).
-- **Projects** — `src/components/developer/ProjectsSection.jsx`.
-- **Skills / navigation** — `src/data/skills.js`, `src/data/navigation.js`.
-- **Hero, About, Contact** — `src/components/home/`.
+docs/
+├── jpg-portfolio-logo.webp
+└── portfolio-preview.webp
+````
 
-### Images
-Drop files into `public/images/...` and reference them by absolute path (e.g. `/images/projects/wiss-hub.webp`). Use **ASCII filenames only** (no umlauts) so URLs resolve on Linux hosts. Key paths:
+The project is separated into reusable components and dedicated data files for projects, skills, navigation and photography content.
 
-- Hero portrait — `public/images/placeholders/portrait.webp`
-- About portrait — `public/images/placeholders/portrait-about.webp`
-- Project shots — `public/images/projects/{wiss-hub,glatt-hub,glatt-sorter}.webp`
-- Gallery — `public/images/gallery/large/` (paths listed in `src/data/photos.js`)
+---
 
-Missing images fall back to the `<image-slot>` placeholder, so files can be added incrementally.
+## Design and Accessibility
 
-## Accessibility & motion
+The portfolio was designed from scratch with a strong focus on typography, spacing and visual hierarchy.
 
-Keyboard-focusable, semantic markup, and `prefers-reduced-motion` is respected (scroll reveals and parallax reduce to static). The site uses native scrolling for zero input latency.
+Accessibility considerations include:
+
+* Semantic HTML structure
+* Keyboard-accessible interactive elements
+* Visible focus states
+* Responsive layouts
+* Support for `prefers-reduced-motion`
+
+Animations and parallax effects are reduced when the user's operating system requests less motion.
+
+---
+
+
+## Deployment
+
+The production website is deployed on **Vercel** and available at:
+
+**https://jaygrenacher.ch**
+
+The application is built as a static frontend and does not require a backend or database.
+
+---
+
+## Author
+
+**Jay Grenacher**
+
+Informatics Student and Application Developer from Switzerland.
+
+[Portfolio](https://jaygrenacher.ch) · [GitHub](https://github.com/Jayyy-PG)
+
