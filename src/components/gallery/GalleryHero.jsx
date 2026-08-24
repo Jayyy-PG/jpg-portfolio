@@ -28,9 +28,8 @@ export default function GalleryHero() {
         </div>
       </section>
 
-      <div className="gal-marquee" aria-hidden="true">
-        <div className="gal-marquee__track">
-          <span>Motorsport</span><span>Nature</span><span>Portrait</span><span>Lifestyle</span><span>Vibe</span><span>Studio</span>
+      <div className="gal-tags" aria-hidden="true">
+        <div className="gal-tags__row">
           <span>Motorsport</span><span>Nature</span><span>Portrait</span><span>Lifestyle</span><span>Vibe</span><span>Studio</span>
         </div>
       </div>

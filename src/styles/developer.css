@@ -433,7 +433,8 @@
   flex: 0 0 auto;
 }
 
-/* Per-project accent: 01 purple, 02 GlattTube red (matches its logo), 03 green. */
+/* Per-project accent: 01 purple, 02 GlattTube red (matches its logo). Any
+   card without its own brand keeps the site accent from .project above. */
 .project:nth-of-type(1) {
   --proj-accent: #d44df0;
   --proj-accent-rgb: 212, 77, 240;
@@ -444,9 +445,45 @@
   --proj-accent-rgb: 232, 54, 44;
 }
 
-.project:nth-of-type(3) {
-  --proj-accent: #22c55e;
-  --proj-accent-rgb: 34, 197, 94;
+/* Placeholder for a project that has nothing public to show yet. Same
+   footprint as a media panel so the card grid keeps its rhythm. */
+.project__media--wip {
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 110% at 50% 100%, rgba(var(--proj-accent-rgb), 0.10), transparent 62%),
+    var(--surface-1);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+
+.project__media--wip::after { content: none; }
+
+.project__wip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.project__wip-label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--proj-accent);
+}
+
+.project__wip-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
 .project__lead {

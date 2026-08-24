@@ -61,11 +61,7 @@ export default function ImageLightbox() {
     }
 
     figs.forEach((figure, index) => {
-      const handler = (event) => {
-        const slot = event.target.closest('image-slot');
-        if (slot && slot.hasAttribute('data-reframe')) return;
-        open(index);
-      };
+      const handler = () => open(index);
       figure.addEventListener('click', handler);
       cleanups.push(() => figure.removeEventListener('click', handler));
     });

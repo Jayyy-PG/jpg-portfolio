@@ -1,11 +1,11 @@
 /* =========================================================================
-   Framer Design System — colors, type, spacing, radius, shadow
+   Design tokens — colors, type, spacing, radius, shadow
    ========================================================================= */
 
-/* Mona Sans is our open-source substitute for GT Walsheim Medium.
-   Replace this @font-face block with a local GT-Walsheim-Medium.woff2 to
-   restore exact fidelity. */
-@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+/* Mona Sans is the open-source substitute for GT Walsheim Medium, which is
+   licensed and not redistributable. Swap in a local GT-Walsheim-Medium.woff2
+   via @font-face to restore exact fidelity. The families themselves are
+   linked from index.html so the request is not blocked behind this file. */
 
 :root {
   /* ----- Brand & accent ----- */

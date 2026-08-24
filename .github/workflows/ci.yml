@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Image paths are case-sensitive on Linux hosts but not on the Windows
+      # machine the site is authored on — catch broken references before deploy.
+      - name: Check referenced images exist
+        run: |
+          missing=0
+          refs=$(grep -rhoE "['\"]/images/[^'\"]+" src index.html | tr -d "'\"")
+          # Only paths that name a file — base-path constants are directories.
+          for path in $(echo "$refs" | grep -iE '[.](webp|png|jpe?g|svg|avif|gif|ico)$' | sort -u); do
+            if [ ! -f "public$path" ]; then
+              echo "::error::missing image: public$path"
+              missing=1
+            fi
+          done
+          exit $missing

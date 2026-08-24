@@ -28,5 +28,5 @@ Thumbs.db
 .vercel
 .env*.local
 
-# Sidecar state file written by <image-slot> in the canvas runtime
+# Stale authoring sidecar — no longer produced, never deployed
 .image-slots.state.json

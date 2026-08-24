@@ -1,6 +1,6 @@
 /* ============================================================
    JPG Portfolio — shared site styles
-   Layered on top of tokens.css (Framer dark canvas).
+   Layered on top of tokens.css (dark canvas).
    ============================================================ */
 
 /* Theme accent — a warm coral/orange used as the JPG signature.
@@ -397,7 +397,7 @@ main { padding-top: 64px; }
 .projects,
 .dev-cta,
 .gal-hero,
-.gal-marquee,
+.gal-tags,
 .gal-wall {
   isolation: isolate;
 }

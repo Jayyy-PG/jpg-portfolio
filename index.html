@@ -12,7 +12,8 @@
     <link rel="canonical" href="https://jaygrenacher.ch/" />
 
     <link rel="icon" type="image/svg+xml" href="/images/logos/jpg-portfolio-logo.svg" />
-    <link rel="apple-touch-icon" href="/images/logos/jpg-portfolio-logo.svg" />
+    <!-- iOS ignores SVG here, so the touch icon is a rasterised, opaque 180x180. -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -20,7 +21,12 @@
     <meta property="og:title" content="Jay Patric Grenacher — JPG Portfolio" />
     <meta property="og:description" content="Software engineer & photographer based in Aargau, Switzerland." />
     <meta property="og:url" content="https://jaygrenacher.ch/" />
-    <meta property="og:image" content="https://jaygrenacher.ch/images/logos/jpg-portfolio-logo.svg" />
+    <!-- Raster, not the logo SVG: LinkedIn, Slack and X do not render SVG previews. -->
+    <meta property="og:image" content="https://jaygrenacher.ch/images/og-cover.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Jay Patric Grenacher - software engineer and photographer, Aargau, Switzerland." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="de_CH" />
 
@@ -28,12 +34,15 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Jay Patric Grenacher — JPG Portfolio" />
     <meta name="twitter:description" content="Software engineer & photographer based in Aargau, Switzerland." />
-    <meta name="twitter:image" content="https://jaygrenacher.ch/images/logos/jpg-portfolio-logo.svg" />
+    <meta name="twitter:image" content="https://jaygrenacher.ch/images/og-cover.jpg" />
+    <meta name="twitter:image:alt" content="Jay Patric Grenacher - software engineer and photographer, Aargau, Switzerland." />
 
-    <!-- Speed up external assets -->
+    <!-- Fonts are requested here rather than through an @import inside the
+         stylesheet: the browser can start them alongside the CSS instead of
+         waiting for the CSS to parse first. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" />
   </head>
   <body>
     <div id="root"></div>

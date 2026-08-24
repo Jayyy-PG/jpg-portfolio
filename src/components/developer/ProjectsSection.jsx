@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons';
+const ICONS = '/images/icons';
 
 const projects = [
   {
@@ -24,14 +24,14 @@ const projects = [
       { en: 'revDSG-compliant, Row-Level-Security, EU hosting', de: 'revDSG-konform, Row-Level-Security, EU-Hosting' },
     ],
     stack: [
-      { name: 'TypeScript', icon: `${DEVICON}/typescript/typescript-original.svg` },
-      { name: 'Next.js', icon: `${DEVICON}/nextjs/nextjs-original.svg`, invert: true },
-      { name: 'React', icon: `${DEVICON}/react/react-original.svg` },
-      { name: 'Tailwind', icon: `${DEVICON}/tailwindcss/tailwindcss-original.svg` },
-      { name: 'PostgreSQL', icon: `${DEVICON}/postgresql/postgresql-original.svg` },
-      { name: 'Supabase', icon: `${DEVICON}/supabase/supabase-original.svg` },
+      { name: 'TypeScript', icon: `${ICONS}/typescript.svg` },
+      { name: 'Next.js', icon: `${ICONS}/nextjs.svg`, invert: true },
+      { name: 'React', icon: `${ICONS}/react.svg` },
+      { name: 'Tailwind', icon: `${ICONS}/tailwindcss.svg` },
+      { name: 'PostgreSQL', icon: `${ICONS}/postgresql.svg` },
+      { name: 'Supabase', icon: `${ICONS}/supabase.svg` },
       { name: 'Zod' },
-      { name: 'Vercel', icon: `${DEVICON}/vercel/vercel-original.svg`, invert: true },
+      { name: 'Vercel', icon: `${ICONS}/vercel.svg`, invert: true },
     ],
     note: {
       en: '180+ modules · strict TypeScript · type-check, lint & tests (Vitest, Playwright) run before every deploy · Lighthouse 100 desktop / 96 mobile.',
@@ -61,11 +61,11 @@ const projects = [
       { en: 'Favorites, history, playlists & full-text search', de: 'Favoriten, Verlauf, Playlists & Volltextsuche' },
     ],
     stack: [
-      { name: 'Electron', icon: `${DEVICON}/electron/electron-original.svg` },
-      { name: 'React', icon: `${DEVICON}/react/react-original.svg` },
-      { name: 'TypeScript', icon: `${DEVICON}/typescript/typescript-original.svg` },
-      { name: 'Tailwind', icon: `${DEVICON}/tailwindcss/tailwindcss-original.svg` },
-      { name: 'SQLite', icon: `${DEVICON}/sqlite/sqlite-original.svg` },
+      { name: 'Electron', icon: `${ICONS}/electron.svg` },
+      { name: 'React', icon: `${ICONS}/react.svg` },
+      { name: 'TypeScript', icon: `${ICONS}/typescript.svg` },
+      { name: 'Tailwind', icon: `${ICONS}/tailwindcss.svg` },
+      { name: 'SQLite', icon: `${ICONS}/sqlite.svg` },
     ],
     note: {
       en: 'Local-first desktop app · all data stays under %APPDATA% · packaged with electron-builder · FFmpeg & yt-dlp bundled.',
@@ -73,17 +73,16 @@ const projects = [
     },
   },
   {
-    id: 'glattsorter',
+    id: 'next',
     num: '03',
-    name: 'GLATT SORTER',
-    media: '/images/projects/glatt-sorter.webp',
-    fit: 'cover',
-    tag: { en: 'Desktop · Workflow tool', de: 'Desktop · Workflow-Tool' },
+    name: { en: 'NEXT PROJECT', de: 'NÄCHSTES PROJEKT' },
+    wip: true,
+    tag: { en: 'In development', de: 'In Entwicklung' },
     lead: {
-      en: 'A simple desktop app for quickly sorting video clips. Pick a folder, define your own action buttons with target folders, then copy or move selected clips with one click. Built for the fast-cut editing workflow.',
-      de: 'Eine einfache Desktop-App zum schnellen Sortieren von Videoclips. Ordner wählen, eigene Action-Buttons mit Zielordnern definieren, danach Clips per Klick kopieren oder verschieben. Gebaut für schnelles Schnitt-Workflow.',
+      en: 'Something bigger is already in motion. The details stay under wraps for now — but this is the one I am most excited to ship, and it gets its reveal right here.',
+      de: 'Etwas Grösseres ist bereits in Arbeit. Die Details bleiben vorerst unter Verschluss — aber es ist das Projekt, auf das ich mich am meisten freue, und es wird genau hier enthüllt.',
     },
-    cta: { type: 'link', href: 'https://github.com/Jayyy-PG/Glatt-Sorter' },
+    cta: { type: 'soon' },
   },
 ];
 
@@ -115,20 +114,42 @@ function ProjectCard({ project, open, onToggle }) {
     <article className={`project reveal${project.alt ? ' project--alt' : ''}`} data-open={open ? 'true' : 'false'}>
       <div className="project__num">{project.num}</div>
 
-      <div className="project__media" data-parallax-y="22">
-        <image-slot
-          id={`proj-${project.id}`}
-          shape="rounded"
-          radius="6"
-          fit={project.fit}
-          placeholder={`${project.name} preview`}
-          src={project.media}
-          style={{ width: '100%', aspectRatio: '16 / 10', background: '#141414' }}
-        />
-      </div>
+      {project.wip ? (
+        <div className="project__media project__media--wip" data-parallax-y="22">
+          <div className="project__wip">
+            <span className="project__wip-label">
+              <span data-show="en">In development</span>
+              <span data-show="de">In Entwicklung</span>
+            </span>
+            <p className="project__wip-note">
+              <span data-show="en">Reveal soon</span>
+              <span data-show="de">Enthüllung folgt</span>
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="project__media" data-parallax-y="22">
+          <image-slot
+            id={`proj-${project.id}`}
+            shape="rounded"
+            radius="6"
+            fit={project.fit}
+            placeholder={`${project.name} preview`}
+            src={project.media}
+            style={{ width: '100%', aspectRatio: '16 / 10', background: '#141414' }}
+          />
+        </div>
+      )}
 
       <div className="project__copy">
-        <h3 className="project__name">{project.name}</h3>
+        <h3 className="project__name">
+          {typeof project.name === 'string' ? project.name : (
+            <>
+              <span data-show="en">{project.name.en}</span>
+              <span data-show="de">{project.name.de}</span>
+            </>
+          )}
+        </h3>
         <p className="project__lead" data-show="en">{project.lead.en}</p>
         <p className="project__lead" data-show="de">{project.lead.de}</p>
 
