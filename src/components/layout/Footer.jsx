@@ -25,6 +25,15 @@ export default function Footer() {
           <a className="footer__link" href={`mailto:${email}`}><Icon type="mail" />{email}</a>
           <a className="footer__link" href="https://github.com/Jayyy-PG" target="_blank" rel="noopener noreferrer"><Icon type="github" />github.com/Jayyy-PG</a>
           <a className="footer__link" href="https://www.instagram.com/jayyy_p.g/" target="_blank" rel="noopener noreferrer"><Icon type="instagram" />instagram / @jayyy_p.g</a>
+          <nav className="footer__legal" aria-label="Legal">
+            <a href="/datenschutz">
+              <span data-show="en">Privacy</span><span data-show="de">Datenschutz</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <a href="/impressum">
+              <span data-show="en">Legal notice</span><span data-show="de">Impressum</span>
+            </a>
+          </nav>
           <p className="footer__copy">© 2026 Jay Patric Grenacher / Aargau, CH</p>
         </div>
       </div>

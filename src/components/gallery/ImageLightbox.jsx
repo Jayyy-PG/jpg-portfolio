@@ -1,98 +1,178 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { t, useLang } from '../../utils/lang.js';
 
-const markup = "<!-- Lightbox -->\n<div class=\"lb\" id=\"lightbox\" hidden aria-hidden=\"true\">\n  <div class=\"lb__backdrop\" data-close></div>\n  <button class=\"lb__close\" data-close aria-label=\"Close\">\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M18 6 6 18M6 6l12 12\"/></svg>\n  </button>\n  <button class=\"lb__nav lb__nav--prev\" data-prev aria-label=\"Previous\">\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M15 6l-6 6 6 6\"/></svg>\n  </button>\n  <button class=\"lb__nav lb__nav--next\" data-next aria-label=\"Next\">\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M9 6l6 6-6 6\"/></svg>\n  </button>\n\n  <div class=\"lb__stage\">\n    <div class=\"lb__image\"><img id=\"lb-img\" alt=\"\" /></div>\n    <aside class=\"lb__panel\">\n      <div class=\"lb__num\" id=\"lb-num\">01 / 09</div>\n      <h2 class=\"lb__title\" id=\"lb-title\"></h2>\n      <div class=\"lb__series\" id=\"lb-series\"></div>\n      <p class=\"lb__desc\" id=\"lb-desc\"></p>\n      <dl class=\"lb__exif\">\n        <div><dt data-show=\"en\">Camera</dt><dt data-show=\"de\">Kamera</dt><dd id=\"lb-camera\"></dd></div>\n        <div><dt data-show=\"en\">Lens</dt><dt data-show=\"de\">Objektiv</dt><dd id=\"lb-lens\"></dd></div>\n        <div><dt>ISO</dt><dd id=\"lb-iso\"></dd></div>\n        <div><dt data-show=\"en\">Aperture</dt><dt data-show=\"de\">Blende</dt><dd id=\"lb-aperture\"></dd></div>\n        <div><dt data-show=\"en\">Shutter</dt><dt data-show=\"de\">Verschluss</dt><dd id=\"lb-shutter\"></dd></div>\n        <div><dt data-show=\"en\">Focal length</dt><dt data-show=\"de\">Brennweite</dt><dd id=\"lb-focal\"></dd></div>\n        <div><dt data-show=\"en\">Date</dt><dt data-show=\"de\">Datum</dt><dd id=\"lb-date\"></dd></div>\n      </dl>\n    </aside>\n  </div>\n</div>";
+const CLOSE_TRANSITION_MS = 280;
 
-export default function ImageLightbox() {
-  const ref = useRef(null);
+const LABELS = {
+  close: { en: 'Close', de: 'Schliessen' },
+  prev: { en: 'Previous image', de: 'Vorheriges Bild' },
+  next: { en: 'Next image', de: 'Nächstes Bild' },
+  dialog: { en: 'Photo viewer', de: 'Bildansicht' },
+  camera: { en: 'Camera', de: 'Kamera' },
+  lens: { en: 'Lens', de: 'Objektiv' },
+  aperture: { en: 'Aperture', de: 'Blende' },
+  shutter: { en: 'Shutter', de: 'Verschluss' },
+  focal: { en: 'Focal length', de: 'Brennweite' },
+  date: { en: 'Date', de: 'Datum' },
+};
+
+const FOCUSABLE = 'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+/**
+ * Modal photo viewer.
+ *
+ * Behaves like a dialog rather than merely looking like one: it is labelled
+ * and described for assistive technology, takes focus on open, keeps Tab
+ * inside itself while it is open, closes on Escape, and hands focus back to
+ * the thumbnail that opened it.
+ */
+export default function ImageLightbox({ photos, index, onClose, onPrev, onNext }) {
+  const lang = useLang();
+  const dialogRef = useRef(null);
+  const closeRef = useRef(null);
+
+  const isOpen = index !== null;
+
+  // The photo currently on screen. Held in state rather than read from
+  // `index` directly so the closing fade keeps showing the photo the viewer
+  // was looking at instead of snapping back to the first one.
+  const [shownIndex, setShownIndex] = useState(0);
+  if (isOpen && index !== shownIndex) setShownIndex(index);
+
+  // `shown` drives the fade, `lingering` keeps the element in the layout for
+  // the length of that fade. Both are flipped from async callbacks so the
+  // browser gets a frame with the element displayed but still transparent —
+  // without it there is nothing to transition from.
+  const [shown, setShown] = useState(false);
+  const [lingering, setLingering] = useState(false);
 
   useEffect(() => {
-    const lb = ref.current?.querySelector('#lightbox');
-    const lbImg = ref.current?.querySelector('#lb-img');
-    const figs = [...document.querySelectorAll('.frame')];
-    if (!lb || !lbImg || figs.length === 0) return undefined;
-
-    let idx = 0;
-    let hideTimer = null;
-    const cleanups = [];
-
-    function readImg(figure) {
-      const slot = figure.querySelector('image-slot');
-      if (slot) {
-        const inner = slot.shadowRoot && slot.shadowRoot.querySelector('img');
-        if (inner && inner.src) return inner.src;
-        const src = slot.getAttribute('src');
-        if (src) return src;
-      }
-      return '';
+    if (isOpen) {
+      const raf = window.requestAnimationFrame(() => {
+        setLingering(true);
+        setShown(true);
+      });
+      return () => window.cancelAnimationFrame(raf);
     }
-
-    function ds(figure, key) {
-      const lang = document.documentElement.dataset.lang || 'en';
-      return figure.dataset[key + (lang === 'de' ? 'De' : 'En')] || figure.dataset[key + 'En'] || '';
-    }
-
-    function open(nextIndex) {
-      idx = (nextIndex + figs.length) % figs.length;
-      const figure = figs[idx];
-      lbImg.src = readImg(figure);
-      lb.querySelector('#lb-num').textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(figs.length).padStart(2, '0');
-      lb.querySelector('#lb-title').textContent = ds(figure, 'title');
-      lb.querySelector('#lb-series').textContent = ds(figure, 'series');
-      lb.querySelector('#lb-desc').textContent = ds(figure, 'desc');
-      lb.querySelector('#lb-camera').textContent = figure.dataset.camera || '-';
-      lb.querySelector('#lb-lens').textContent = figure.dataset.lens || '-';
-      lb.querySelector('#lb-iso').textContent = figure.dataset.iso || '-';
-      lb.querySelector('#lb-aperture').textContent = figure.dataset.aperture || '-';
-      lb.querySelector('#lb-shutter').textContent = figure.dataset.shutter || '-';
-      lb.querySelector('#lb-focal').textContent = figure.dataset.focal || '-';
-      lb.querySelector('#lb-date').textContent = figure.dataset.date || '-';
-      lb.hidden = false;
-      lb.setAttribute('aria-hidden', 'false');
-      window.clearTimeout(hideTimer);
-      requestAnimationFrame(() => lb.classList.add('is-open'));
-      document.body.style.overflow = 'hidden';
-    }
-
-    function close() {
-      lb.classList.remove('is-open');
-      lb.setAttribute('aria-hidden', 'true');
-      hideTimer = window.setTimeout(() => { lb.hidden = true; }, 280);
-      document.body.style.overflow = '';
-    }
-
-    figs.forEach((figure, index) => {
-      const handler = () => open(index);
-      figure.addEventListener('click', handler);
-      cleanups.push(() => figure.removeEventListener('click', handler));
-    });
-
-    const closeHandler = (event) => { if (event.target.closest('[data-close]')) close(); };
-    const prevButton = lb.querySelector('[data-prev]');
-    const nextButton = lb.querySelector('[data-next]');
-    const prevHandler = () => open(idx - 1);
-    const nextHandler = () => open(idx + 1);
-    const keyHandler = (event) => {
-      if (lb.hidden) return;
-      if (event.key === 'Escape') close();
-      if (event.key === 'ArrowLeft') open(idx - 1);
-      if (event.key === 'ArrowRight') open(idx + 1);
-    };
-
-    lb.addEventListener('click', closeHandler);
-    prevButton?.addEventListener('click', prevHandler);
-    nextButton?.addEventListener('click', nextHandler);
-    document.addEventListener('keydown', keyHandler);
-
+    const raf = window.requestAnimationFrame(() => setShown(false));
+    const timer = window.setTimeout(() => setLingering(false), CLOSE_TRANSITION_MS);
     return () => {
-      cleanups.forEach((fn) => fn());
-      lb.removeEventListener('click', closeHandler);
-      prevButton?.removeEventListener('click', prevHandler);
-      nextButton?.removeEventListener('click', nextHandler);
-      document.removeEventListener('keydown', keyHandler);
-      document.body.style.overflow = '';
-      window.clearTimeout(hideTimer);
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
     };
-  }, []);
+  }, [isOpen]);
 
-  return <div ref={ref} dangerouslySetInnerHTML={{ __html: markup }} />;
+  // Move focus into the dialog once it is visible.
+  useEffect(() => {
+    if (!isOpen) return;
+    closeRef.current?.focus();
+  }, [isOpen]);
+
+  // Lock background scrolling for as long as the dialog is up. Restoring the
+  // previous value rather than clearing it avoids clobbering anything else
+  // that may have set it.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previous; };
+  }, [isOpen]);
+
+  const handleKeyDown = useCallback((event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      onClose();
+      return;
+    }
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      onPrev();
+      return;
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      onNext();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    // Focus trap: cycle within the dialog so the page behind stays
+    // unreachable by keyboard while the dialog is open.
+    const focusable = Array.from(dialogRef.current?.querySelectorAll(FOCUSABLE) || [])
+      .filter((el) => el.getClientRects().length > 0);
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }, [onClose, onPrev, onNext]);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleKeyDown]);
+
+  // Not rendered at all until it is opened. A hidden <img> still downloads,
+  // and these are the full-size files — mounting on demand keeps them off the
+  // initial page load entirely.
+  if (!isOpen && !lingering) return null;
+
+  const photo = photos[shownIndex];
+  if (!photo) return null;
+
+  const label = (key) => LABELS[key][lang] || LABELS[key].en;
+
+  return (
+    <div
+      className={`lb${shown ? ' is-open' : ''}`}
+      id="lightbox"
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lb-title"
+      aria-describedby="lb-desc"
+    >
+      <div className="lb__backdrop" onClick={onClose} aria-hidden="true" />
+
+      <button className="lb__close" type="button" onClick={onClose} aria-label={label('close')} ref={closeRef}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+      <button className="lb__nav lb__nav--prev" type="button" onClick={onPrev} aria-label={label('prev')}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+      </button>
+      <button className="lb__nav lb__nav--next" type="button" onClick={onNext} aria-label={label('next')}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+      </button>
+
+      <div className="lb__stage">
+        <div className="lb__image">
+          <img id="lb-img" src={photo.src} alt={t(photo.alt, lang)} decoding="async" />
+        </div>
+        <aside className="lb__panel">
+          <div className="lb__num">
+            {String(shownIndex + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}
+          </div>
+          <h2 className="lb__title" id="lb-title">{t(photo.title, lang)}</h2>
+          <div className="lb__series">{t(photo.series, lang)}</div>
+          <p className="lb__desc" id="lb-desc">{t(photo.desc, lang)}</p>
+          <dl className="lb__exif">
+            <div><dt>{label('camera')}</dt><dd>{photo.camera || '-'}</dd></div>
+            <div><dt>{label('lens')}</dt><dd>{photo.lens || '-'}</dd></div>
+            <div><dt>ISO</dt><dd>{photo.iso || '-'}</dd></div>
+            <div><dt>{label('aperture')}</dt><dd>{photo.aperture || '-'}</dd></div>
+            <div><dt>{label('shutter')}</dt><dd>{photo.shutter || '-'}</dd></div>
+            <div><dt>{label('focal')}</dt><dd>{photo.focal || '-'}</dd></div>
+            <div><dt>{label('date')}</dt><dd>{photo.date || '-'}</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  );
 }

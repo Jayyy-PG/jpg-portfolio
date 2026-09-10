@@ -1,23 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { navigationLinks } from '../../data/navigation.js';
-
-const LANG_KEY = 'jpg.lang';
+import { setLang, useLang } from '../../utils/lang.js';
 
 export default function Navbar({ currentPath }) {
-  const [lang, setLangState] = useState(() => localStorage.getItem(LANG_KEY) || 'en');
+  const lang = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const safeLang = lang === 'de' ? 'de' : 'en';
-    document.documentElement.dataset.lang = safeLang;
-    document.documentElement.lang = safeLang;
-    localStorage.setItem(LANG_KEY, safeLang);
-  }, [lang]);
-
-  // Close the mobile menu whenever the route changes.
-  useEffect(() => { setMenuOpen(false); }, [currentPath]);
-
-  const setLang = (nextLang) => setLangState(nextLang === 'de' ? 'de' : 'en');
+  // Close the mobile menu whenever the route changes. Adjusting state during
+  // render rather than in an effect: React discards this pass and re-runs it
+  // immediately, so the menu never paints open on the new page.
+  const [renderedPath, setRenderedPath] = useState(currentPath);
+  if (currentPath !== renderedPath) {
+    setRenderedPath(currentPath);
+    setMenuOpen(false);
+  }
 
   return (
     <header className={`nav${menuOpen ? ' nav--open' : ''}`}>
@@ -44,9 +40,9 @@ export default function Navbar({ currentPath }) {
         </nav>
 
         <div className="nav__right">
-          <div className="lang" role="group" aria-label="Language">
-            <button data-lang="en" aria-pressed={lang === 'en'} onClick={() => setLang('en')}>EN</button>
-            <button data-lang="de" aria-pressed={lang === 'de'} onClick={() => setLang('de')}>DE</button>
+          <div className="lang" role="group" aria-label="Language / Sprache">
+            <button type="button" data-lang="en" lang="en" aria-pressed={lang === 'en'} onClick={() => setLang('en')} title="English">EN</button>
+            <button type="button" data-lang="de" lang="de" aria-pressed={lang === 'de'} onClick={() => setLang('de')} title="Deutsch">DE</button>
           </div>
           <button
             className="nav__burger"

@@ -1,12 +1,25 @@
 import { useState } from 'react';
+import { useLang } from '../../utils/lang.js';
+import { prefersReducedMotion } from '../../utils/motion.js';
+
+const PORTRAIT_ALT = {
+  en: 'Jay Patric Grenacher, portrait taken outdoors.',
+  de: 'Jay Patric Grenacher, Porträt im Freien.',
+};
+
+const ABOUT_PORTRAIT_ALT = {
+  en: 'Jay Patric Grenacher, second portrait.',
+  de: 'Jay Patric Grenacher, zweites Porträt.',
+};
 
 export default function Hero() {
   const [state, setState] = useState('main');
+  const lang = useLang();
 
   const openAbout = () => {
     setState('about');
     requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
     });
   };
 
@@ -69,8 +82,12 @@ export default function Hero() {
                 shape="rounded"
                 radius="2"
                 fit="cover"
-                placeholder="Drop your portrait"
+                placeholder="Portrait"
                 src="/images/placeholders/portrait.webp"
+                alt={PORTRAIT_ALT[lang] || PORTRAIT_ALT.en}
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
                 style={{ width: '100%', height: '100%', display: 'block', background: '#141414' }}
               />
               <div className="hero__portrait-frame" aria-hidden="true" />
@@ -98,6 +115,9 @@ export default function Hero() {
                   radius="10"
                   placeholder="Portrait"
                   src="/images/placeholders/portrait-about.webp"
+                  alt={ABOUT_PORTRAIT_ALT[lang] || ABOUT_PORTRAIT_ALT.en}
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', height: '100%', display: 'block', background: '#141414' }}
                 />
               </div>

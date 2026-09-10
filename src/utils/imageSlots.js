@@ -7,26 +7,39 @@
  * Size and layout come from ordinary CSS on the element itself, so it
  * composes with any grid or flex parent.
  *
+ * The loading-relevant attributes are forwarded to the inner <img> rather
+ * than reinvented, so a slot behaves like the image it wraps: `alt` reaches
+ * the accessibility tree, `loading="lazy"` defers off-screen requests, and
+ * `fetchpriority` can promote the one image that matters above the fold.
+ *
  * Attributes:
- *   shape        'rect' | 'rounded' | 'circle' | 'pill'   (default 'rounded')
- *                'circle' applies 50% border-radius; on a non-square slot
- *                that is an ellipse — set equal width and height for a true
- *                circle.
- *   radius       Corner radius in px for 'rounded'.        (default 12)
- *   mask         Any CSS clip-path value. Overrides `shape` — use it for
- *                hexagons, blobs, arbitrary polygons.
- *   fit          object-fit: cover | contain | fill.       (default 'cover')
- *   position     object-position.                          (default '50% 50%')
- *   placeholder  Caption shown when `src` is absent or fails to load.
- *   src          Image URL.
+ *   shape          'rect' | 'rounded' | 'circle' | 'pill'   (default 'rounded')
+ *                  'circle' applies 50% border-radius; on a non-square slot
+ *                  that is an ellipse — set equal width and height for a true
+ *                  circle.
+ *   radius         Corner radius in px for 'rounded'.        (default 12)
+ *   mask           Any CSS clip-path value. Overrides `shape` — use it for
+ *                  hexagons, blobs, arbitrary polygons.
+ *   fit            object-fit: cover | contain | fill.       (default 'cover')
+ *   position       object-position.                          (default '50% 50%')
+ *   placeholder    Caption shown when `src` is absent or fails to load.
+ *   src            Image URL.
+ *   srcset, sizes  Responsive candidates, forwarded verbatim.
+ *   alt            Alternative text. Defaults to "" (decorative): an <img>
+ *                  with no alt at all makes screen readers fall back to
+ *                  reading the file name, which is worse than silence.
+ *   loading        'lazy' | 'eager'                          (browser default)
+ *   decoding       'async' | 'sync' | 'auto'                 (browser default)
+ *   fetchpriority  'high' | 'low' | 'auto'                   (browser default)
  *
  * Usage:
  *   <image-slot src="/images/placeholders/portrait.webp" shape="rounded"
- *               radius="20" style="width:800px;height:450px"></image-slot>
+ *               radius="20" alt="Portrait of Jay" loading="lazy"
+ *               decoding="async" style="width:800px;height:450px"></image-slot>
  */
 
 (() => {
-  const stylesheet =
+  const CSS_TEXT =
     ':host{display:inline-block;position:relative;vertical-align:top;' +
     '  font:13px/1.3 system-ui,-apple-system,sans-serif;color:rgba(0,0,0,.55);' +
     '  width:240px;height:160px}' +
@@ -45,27 +58,51 @@
     '  border:1.5px dashed rgba(0,0,0,.25)}' +
     ':host([data-filled]) .ring{display:none}';
 
-  const icon =
+  // One stylesheet object shared by every instance instead of a <style> element
+  // parsed per slot — the gallery mounts dozens. Also keeps the component free
+  // of inline styles, which a strict Content-Security-Policy would block.
+  let sharedSheet = null;
+  if (typeof CSSStyleSheet !== 'undefined' && 'replaceSync' in CSSStyleSheet.prototype) {
+    try {
+      sharedSheet = new CSSStyleSheet();
+      sharedSheet.replaceSync(CSS_TEXT);
+    } catch {
+      sharedSheet = null;
+    }
+  }
+
+  const ICON =
     '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>' +
     '<path d="m21 15-5-5L5 21"/></svg>';
 
+  // Attributes copied straight through to the inner <img>.
+  const IMG_PASSTHROUGH = ['alt', 'loading', 'decoding', 'fetchpriority', 'srcset', 'sizes'];
+
   class ImageSlot extends HTMLElement {
     static get observedAttributes() {
-      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src'];
+      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src', ...IMG_PASSTHROUGH];
     }
 
     constructor() {
       super();
       const root = this.attachShadow({ mode: 'open' });
       root.innerHTML =
-        '<style>' + stylesheet + '</style>' +
         '<div class="frame" part="frame">' +
-        '  <img part="image" alt="" draggable="false" style="display:none">' +
-        '  <div class="empty" part="empty">' + icon + '<div class="cap"></div></div>' +
+        '  <img part="image" alt="" draggable="false">' +
+        '  <div class="empty" part="empty">' + ICON + '<div class="cap"></div></div>' +
         '  <div class="ring" part="ring"></div>' +
         '</div>';
+
+      if (sharedSheet) {
+        root.adoptedStyleSheets = [sharedSheet];
+      } else {
+        const style = document.createElement('style');
+        style.textContent = CSS_TEXT;
+        root.prepend(style);
+      }
+
       this._frame = root.querySelector('.frame');
       this._ring = root.querySelector('.ring');
       this._img = root.querySelector('.frame img');
@@ -111,6 +148,18 @@
       this._img.style.objectFit = this.getAttribute('fit') || 'cover';
       this._img.style.objectPosition = this.getAttribute('position') || '50% 50%';
       this._cap.textContent = this.getAttribute('placeholder') || 'Image';
+
+      for (const name of IMG_PASSTHROUGH) {
+        const value = this.getAttribute(name);
+        if (value === null) {
+          // alt is the exception: absent must still mean "decorative", never
+          // "let the browser announce the file name".
+          if (name === 'alt') this._img.setAttribute('alt', '');
+          else this._img.removeAttribute(name);
+        } else {
+          this._img.setAttribute(name, value);
+        }
+      }
 
       const src = this.getAttribute('src') || '';
       const url = src && src !== this._failedSrc ? src : '';

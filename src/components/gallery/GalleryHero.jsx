@@ -8,7 +8,10 @@ export default function GalleryHero() {
           <span data-parallax-y="50" data-parallax-s="0.1" />
         </div>
         <div className="shell gal-hero__inner">
-          <span className="eyebrow" data-parallax-y="-10">Gallery / 2023 - 2026</span>
+          <span className="eyebrow" data-parallax-y="-10">
+            <span data-show="en">Gallery / 2024 — 2026</span>
+            <span data-show="de">Galerie / 2024 — 2026</span>
+          </span>
           <h1 className="gal-hero__title" data-parallax-y="-30" data-parallax-s="-0.04">
             <span data-show="en">
               Frames by

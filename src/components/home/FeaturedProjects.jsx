@@ -1,3 +1,5 @@
+import { useLang } from '../../utils/lang.js';
+
 const ICONS = '/images/icons';
 
 const stackPreview = [
@@ -8,9 +10,21 @@ const stackPreview = [
 ];
 
 const photoStack = [
-  { id: 'photo-feat-a', modifier: 'a', src: '/images/gallery/large/night-run.webp', aspect: '4/5', placeholder: 'Hero photo', y: '60', r: '-2.6' },
-  { id: 'photo-feat-b', modifier: 'b', src: '/images/gallery/large/photo-preview-b.webp', aspect: '3/4', placeholder: 'Photo', y: '110', r: '3.6' },
-  { id: 'photo-feat-c', modifier: 'c', src: '/images/gallery/large/photo-preview-c.webp', aspect: '5/4', placeholder: 'Photo', y: '160', r: '-4.6' },
+  {
+    id: 'photo-feat-a', modifier: 'a', src: '/images/gallery/thumbnails/night-run.webp',
+    aspect: '4/5', placeholder: 'Photo', y: '60', r: '-2.6',
+    alt: { en: 'Runner at night.', de: 'Läufer bei Nacht.' },
+  },
+  {
+    id: 'photo-feat-b', modifier: 'b', src: '/images/gallery/thumbnails/photo-preview-b.webp',
+    aspect: '3/4', placeholder: 'Photo', y: '110', r: '3.6',
+    alt: { en: 'Photograph from the gallery.', de: 'Aufnahme aus der Galerie.' },
+  },
+  {
+    id: 'photo-feat-c', modifier: 'c', src: '/images/gallery/thumbnails/photo-preview-c.webp',
+    aspect: '5/4', placeholder: 'Photo', y: '160', r: '-4.6',
+    alt: { en: 'Photograph from the gallery.', de: 'Aufnahme aus der Galerie.' },
+  },
 ];
 
 function ArrowIcon() {
@@ -39,6 +53,8 @@ function CodeCard() {
 }
 
 export default function FeaturedProjects() {
+  const lang = useLang();
+
   return (
     <>
       <div className="sections-anchor" id="sections" />
@@ -120,6 +136,9 @@ export default function FeaturedProjects() {
                   radius="4"
                   placeholder={photo.placeholder}
                   src={photo.src}
+                  alt={photo.alt[lang] || photo.alt.en}
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', aspectRatio: photo.aspect, background: '#141414' }}
                 />
               </div>

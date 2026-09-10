@@ -30,6 +30,11 @@
  * picks the global ease + depth multiplier from one place.
  */
 
+import { prefersReducedMotion } from './motion.js';
+
+const PARALLAX_SELECTOR =
+  '[data-parallax-y], [data-parallax-x], [data-parallax-r], [data-parallax-rx], [data-parallax-s]';
+
 const PRESETS = {
   home:      { ease: 0.12, depth: 1.00 },
   developer: { ease: 0.11, depth: 1.05 },
@@ -42,8 +47,7 @@ const REVEAL_DELAY_MS = 1100;
 const GALLERY_REVEAL_DELAY_MS = 1380;
 
 export function initScrollEffects() {
-  const root = document.documentElement;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduceMotion = prefersReducedMotion();
   const page = document.body.dataset.page || 'home';
   const preset = PRESETS[page] || PRESETS.home;
 
@@ -51,17 +55,23 @@ export function initScrollEffects() {
   const revealItems = Array.from(document.querySelectorAll('.reveal'));
   const galleryItems = Array.from(document.querySelectorAll('.gallery-reveal'));
 
+  // Reduced motion: show everything in its final state and set up nothing
+  // else. No observers, no scroll listener, no rAF loop and — crucially — no
+  // transform writes, so parallax is genuinely off rather than merely damped.
   if (reduceMotion) {
     revealItems.forEach((el) => el.classList.add('in'));
     galleryItems.forEach((el) => el.classList.add('is-visible', 'is-revealed'));
+    document.querySelectorAll(PARALLAX_SELECTOR).forEach((el) => {
+      el.style.transform = '';
+      el.style.willChange = '';
+    });
+    return () => {};
   }
 
   // ── Parallax items ──────────────────────────────────────────────────────
-  const nodes = Array.from(document.querySelectorAll(
-    '[data-parallax-y], [data-parallax-x], [data-parallax-r], [data-parallax-rx], [data-parallax-s]'
-  ));
+  const nodes = Array.from(document.querySelectorAll(PARALLAX_SELECTOR));
 
-  const depthMult = reduceMotion ? 0.35 : preset.depth;
+  const depthMult = preset.depth;
   const ease = preset.ease;
   const EPS = 0.04;
 
@@ -155,7 +165,6 @@ export function initScrollEffects() {
   }
 
   items.forEach((item) => {
-    if (reduceMotion) { activate(item); return; }
     const pendingReveal = findPendingAncestor(item.el, '.reveal', 'in');
     const pendingGallery = findPendingAncestor(item.el, '.gallery-reveal', 'is-visible');
     if (pendingReveal) {
@@ -172,7 +181,7 @@ export function initScrollEffects() {
   });
 
   // ── Observers ─────────────────────────────────────────────────────────────
-  const revealObserver = reduceMotion ? null : new IntersectionObserver((entries) => {
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('in');
@@ -188,7 +197,7 @@ export function initScrollEffects() {
     });
   }, { threshold: 0.14, rootMargin: '0px 0px -12% 0px' });
 
-  const galleryObserver = reduceMotion ? null : new IntersectionObserver((entries) => {
+  const galleryObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('is-visible');
@@ -205,8 +214,8 @@ export function initScrollEffects() {
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
 
-  revealObserver && revealItems.forEach((el) => revealObserver.observe(el));
-  galleryObserver && galleryItems.forEach((el) => galleryObserver.observe(el));
+  revealItems.forEach((el) => revealObserver.observe(el));
+  galleryItems.forEach((el) => galleryObserver.observe(el));
 
   // Track on-screen items so the lerp only walks the active visible set.
   const visObserver = items.length ? new IntersectionObserver((entries) => {
@@ -285,8 +294,8 @@ export function initScrollEffects() {
   window.addEventListener('load', scheduleMeasure);
 
   return () => {
-    revealObserver && revealObserver.disconnect();
-    galleryObserver && galleryObserver.disconnect();
+    revealObserver.disconnect();
+    galleryObserver.disconnect();
     visObserver && visObserver.disconnect();
     bodyObserver && bodyObserver.disconnect();
     window.removeEventListener('scroll', requestTick);

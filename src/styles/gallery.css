@@ -277,7 +277,8 @@
   will-change: transform;
 }
 
-.frame:hover .frame__inner {
+.frame:hover .frame__inner,
+.frame:focus-within .frame__inner {
   transform: translateY(-8px);
   border-color: rgba(255, 122, 61, 0.45);
   box-shadow:
@@ -285,7 +286,8 @@
     0 0 0 1px rgba(255, 122, 61, 0.18);
 }
 
-.frame:hover .frame__inner image-slot {
+.frame:hover .frame__inner image-slot,
+.frame:focus-within .frame__inner image-slot {
   transform: scale(1.04);
 }
 
@@ -294,6 +296,24 @@
   height: auto;
   display: block;
   background: #141414;
+}
+
+.frame__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.frame__open:focus-visible {
+  /* Inset so the ring stays inside the card's rounded corners. */
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+  border-radius: 8px;
 }
 
 .frame__inner::after {
@@ -309,7 +329,8 @@
   transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.frame:hover .frame__inner::after {
+.frame:hover .frame__inner::after,
+.frame:focus-within .frame__inner::after {
   opacity: 0.96;
 }
 

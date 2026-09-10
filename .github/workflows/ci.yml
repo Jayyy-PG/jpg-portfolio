@@ -16,21 +16,38 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      # Checks the built output: one HTML file per route with its own
+      # canonical, a sitemap that matches, every referenced image and font
+      # actually shipped, no third-party requests, and the route status codes
+      # against a server that mirrors the host's cleanUrls and 404.html rules.
+      # Image paths matter here in particular: this runner is case-sensitive
+      # and the machine the site is authored on is not.
+      - name: Verify build output
+        run: node scripts/verify-build.mjs
+
+  audit:
+    runs-on: ubuntu-latest
+    # Reported, not enforced: a new advisory against a build-time dependency
+    # should show up in the log without blocking an unrelated content change.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
       - run: npm ci
 
-      - run: npm run build
-
-      # Image paths are case-sensitive on Linux hosts but not on the Windows
-      # machine the site is authored on — catch broken references before deploy.
-      - name: Check referenced images exist
-        run: |
-          missing=0
-          refs=$(grep -rhoE "['\"]/images/[^'\"]+" src index.html | tr -d "'\"")
-          # Only paths that name a file — base-path constants are directories.
-          for path in $(echo "$refs" | grep -iE '[.](webp|png|jpe?g|svg|avif|gif|ico)$' | sort -u); do
-            if [ ! -f "public$path" ]; then
-              echo "::error::missing image: public$path"
-              missing=1
-            fi
-          done
-          exit $missing
+      - name: Audit dependencies
+        run: npm audit --audit-level=high

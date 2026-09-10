@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLang } from '../../utils/lang.js';
 
 const ICONS = '/images/icons';
 
@@ -8,6 +9,7 @@ const projects = [
     num: '01',
     name: 'WISS HUB',
     media: '/images/projects/wiss-hub.webp',
+    mediaAlt: { en: 'Screenshot of the WISS HUB web platform.', de: 'Screenshot der Web-Plattform WISS HUB.' },
     fit: 'cover',
     tag: { en: 'Web platform · In development', de: 'Web-Plattform · In Entwicklung' },
     lead: {
@@ -43,6 +45,7 @@ const projects = [
     num: '02',
     name: 'GlattTube',
     media: '/images/projects/glatttube.svg',
+    mediaAlt: { en: 'GlattTube wordmark.', de: 'GlattTube-Schriftzug.' },
     fit: 'contain',
     alt: true,
     tag: { en: 'Desktop · Media hub', de: 'Desktop · Media-Hub' },
@@ -110,6 +113,7 @@ function Cta({ cta }) {
 
 function ProjectCard({ project, open, onToggle }) {
   const hasDetails = Boolean(project.features);
+  const lang = useLang();
   return (
     <article className={`project reveal${project.alt ? ' project--alt' : ''}`} data-open={open ? 'true' : 'false'}>
       <div className="project__num">{project.num}</div>
@@ -134,8 +138,11 @@ function ProjectCard({ project, open, onToggle }) {
             shape="rounded"
             radius="6"
             fit={project.fit}
-            placeholder={`${project.name} preview`}
+            placeholder="Preview"
             src={project.media}
+            alt={project.mediaAlt ? (project.mediaAlt[lang] || project.mediaAlt.en) : ''}
+            loading="lazy"
+            decoding="async"
             style={{ width: '100%', aspectRatio: '16 / 10', background: '#141414' }}
           />
         </div>

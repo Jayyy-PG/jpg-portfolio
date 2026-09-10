@@ -45,6 +45,31 @@ img { display: block; max-width: 100%; }
 
 button { font-family: inherit; cursor: pointer; }
 
+/* Keyboard focus has to be visible. :focus-visible keeps it off mouse clicks,
+   so the look is unchanged for pointer users. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Skip link — first stop on the page for keyboard and screen-reader users. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #1a0a05;
+  font-size: 14px;
+  font-weight: 500;
+  transition: top 160ms var(--ease-soft);
+}
+.skip-link:focus {
+  top: 12px;
+}
+
 /* Reduced-motion: kill the large decorative MOTION (scroll-reveal entries,
    parallax, looping keyframes) but keep ordinary transitions alive. Hover
    colour/shadow fades and the like aren't vestibular-trigger motion, and
@@ -54,6 +79,29 @@ button { font-family: inherit; cursor: pointer; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-delay: 0ms !important;
+  }
+
+  /* Smooth scrolling is motion the visitor did not ask for; jump instead. */
+  html { scroll-behavior: auto; }
+
+  /* Reveal entries land in their final state rather than sliding up. The
+     parallax loop is switched off in JavaScript, which also stops it writing
+     transforms over these rules. */
+  .reveal,
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .reveal:not(.in) .section__num,
+  .reveal:not(.in) .section__title,
+  .reveal:not(.in) .section__lead,
+  .reveal:not(.in) .section__skills,
+  .reveal:not(.in) .section__cta,
+  .reveal:not(.in) .section__media {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -368,6 +416,16 @@ html[data-lang="de"] [data-show="de"] { display: revert !important; }
 .footer__meta a { color: var(--ink-muted); font-size: 14px; }
 .footer__meta a:hover { color: var(--ink); }
 .footer__copy { color: var(--ink-muted); font-size: 12px; letter-spacing: 0.05em; }
+
+.footer__legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.footer__legal span[aria-hidden] { color: var(--hairline); }
+.footer__legal a { color: var(--ink-muted); }
+.footer__legal a:hover { color: var(--accent); }
 
 .footer__link {
   display: inline-flex;

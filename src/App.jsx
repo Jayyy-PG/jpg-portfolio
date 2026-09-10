@@ -1,42 +1,56 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PageShell from './components/layout/PageShell.jsx';
 import Home from './pages/Home.jsx';
 import Developer from './pages/Developer.jsx';
 import Gallery from './pages/Gallery.jsx';
+import Legal from './pages/Legal.jsx';
+import NotFound from './pages/NotFound.jsx';
+import { resolveRoute } from './data/routes.js';
+import { applyRouteMeta } from './utils/meta.js';
+import { useLang } from './utils/lang.js';
 import { initScrollEffects } from './utils/scrollReveal.js';
+import { prefersReducedMotion } from './utils/motion.js';
 
-const routes = {
+const pages = {
   '/': Home,
   '/developer': Developer,
   '/gallery': Gallery,
+  '/datenschutz': () => <Legal doc="privacy" />,
+  '/impressum': () => <Legal doc="imprint" />,
+  '/404': NotFound,
 };
-
-const titles = {
-  '/': 'Jay Patric Grenacher - JPG Portfolio',
-  '/developer': 'Developer - Jay Patric Grenacher - JPG',
-  '/gallery': 'Gallery - Jay Patric Grenacher - JPG',
-};
-
-function normalizePath(pathname) {
-  if (pathname === '/index.html') return '/';
-  if (pathname === '/developer.html') return '/developer';
-  if (pathname === '/gallery.html') return '/gallery';
-  return routes[pathname] ? pathname : '/';
-}
 
 export default function App() {
-  const [locationKey, setLocationKey] = useState(() => window.location.pathname + window.location.hash);
-  const pathname = normalizePath(window.location.pathname);
-  const Page = useMemo(() => routes[pathname] || Home, [pathname]);
+  const [pathname, setPathname] = useState(() => window.location.pathname);
+  const [navKey, setNavKey] = useState(0);
+  const lang = useLang();
+
+  const route = resolveRoute(pathname);
+  const Page = pages[route.path] || NotFound;
+
+  const navigate = useCallback((nextPath, hash = '') => {
+    window.history.pushState({}, '', nextPath + hash);
+    setPathname(nextPath);
+    setNavKey((key) => key + 1);
+  }, []);
 
   useEffect(() => {
-    const onPop = () => setLocationKey(window.location.pathname + window.location.hash);
+    const onPop = () => {
+      setPathname(window.location.pathname);
+      setNavKey((key) => key + 1);
+    };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
+  // Intercept same-origin links so in-app navigation stays client-side. A
+  // link to an unknown path is deliberately left to the browser: the server
+  // answers it with a real 404 rather than a soft one.
   useEffect(() => {
     const onClick = (event) => {
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
       const link = event.target.closest('a[href]');
       if (!link) return;
 
@@ -44,28 +58,29 @@ export default function App() {
       if (url.origin !== window.location.origin) return;
       if (link.target || link.hasAttribute('download')) return;
 
-      const nextPath = normalizePath(url.pathname);
-      if (!routes[nextPath]) return;
+      const next = resolveRoute(url.pathname);
+      if (next.noindex) return;
+
+      // Same page, hash only — let the browser handle the jump.
+      if (next.path === window.location.pathname && url.hash) return;
 
       event.preventDefault();
-      const nextUrl = nextPath + url.hash;
-      window.history.pushState({}, '', nextUrl);
-      setLocationKey(nextUrl);
+      navigate(next.path, url.hash);
     };
 
     document.addEventListener('click', onClick);
     return () => document.removeEventListener('click', onClick);
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
-    document.title = titles[pathname] || titles['/'];
-    document.body.dataset.page = pathname === '/' ? 'home' : pathname.slice(1);
-  }, [pathname]);
+    applyRouteMeta(route, lang);
+    document.body.dataset.page = route.page;
+  }, [route, lang]);
 
   useEffect(() => {
     const cleanup = initScrollEffects();
     return cleanup;
-  }, [locationKey]);
+  }, [navKey, route.path]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -73,13 +88,17 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
-    window.setTimeout(() => {
-      document.querySelector(hash)?.scrollIntoView({ block: 'start' });
+    const timer = window.setTimeout(() => {
+      document.querySelector(hash)?.scrollIntoView({
+        block: 'start',
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      });
     }, 0);
-  }, [locationKey]);
+    return () => window.clearTimeout(timer);
+  }, [navKey]);
 
   return (
-    <PageShell currentPath={pathname}>
+    <PageShell currentPath={route.path}>
       <Page />
     </PageShell>
   );

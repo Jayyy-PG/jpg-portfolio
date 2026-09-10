@@ -37,12 +37,11 @@
     <meta name="twitter:image" content="https://jaygrenacher.ch/images/og-cover.jpg" />
     <meta name="twitter:image:alt" content="Jay Patric Grenacher - software engineer and photographer, Aargau, Switzerland." />
 
-    <!-- Fonts are requested here rather than through an @import inside the
-         stylesheet: the browser can start them alongside the CSS instead of
-         waiting for the CSS to parse first. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" />
+    <!-- Fonts are self-hosted, so no request leaves this origin. The two
+         latin files carry the text of a first paint; latin-ext is left to
+         load on demand via unicode-range. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/mona-sans-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>
