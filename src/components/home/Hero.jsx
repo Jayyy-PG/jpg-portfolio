@@ -103,8 +103,8 @@ export default function Hero() {
             </div>
 
             <h2 className="hero__aboutbox-title">
-              <span data-show="en">Hi - I'm Jay.</span>
-              <span data-show="de">Hi - ich bin Jay.</span>
+              <span data-show="en">Hi, I'm Jay.</span>
+              <span data-show="de">Hi, ich bin Jay.</span>
             </h2>
 
             <div className="hero__aboutbox-body">
@@ -123,35 +123,36 @@ export default function Hero() {
               </div>
 
               <p data-show="en">
-                A first-year student at <strong>WISS Zürich</strong>, from Aargau. I build websites and apps that make life easier - currently developing <strong>WISS HUB</strong>, a platform connecting students, projects and companies.
+                I'm a second-year <strong>Informatiker EFZ</strong> student specializing in Application Development at <strong>WISS</strong> in Zurich, Switzerland. I'm based in Aargau and currently working on projects including <strong>WISS HUB</strong>, a platform connecting students, projects, and companies.
               </p>
               <p data-show="en">
-                Before WISS I worked as a <strong>Medientechnologe</strong>, designing flyers, posters and business cards, and editing in <strong>Lightroom &amp; Photoshop</strong>. That print-shop discipline shows up in how I treat type, spacing, and white space.
+                Before that, I worked in <strong>print and media</strong>, designing flyers, posters, and business cards and using <strong>Photoshop, Lightroom, and InDesign</strong>. That experience still shapes how I think about typography, spacing, and clear layouts.
               </p>
               <p data-show="en">
-                Off-screen I'm a huge motorsport fan - F1, <strong>Max Verstappen</strong>, Red Bull - and I race in <strong>Simracing</strong> against pros from a high-end simracing setup.
+                Away from code, I'm into <strong>motorsport</strong>, photography, and sim racing.
               </p>
               <p data-show="en">
-                The plan: a role at a <strong>big IT company</strong> while running my own projects on the side - I want to build things that quietly help.
+                My goal is to keep growing as a software developer while continuing to build my own projects.
               </p>
 
               <p data-show="de">
-                Im ersten Jahr an der <strong>WISS Zürich</strong>, aus dem Aargau. Ich baue Websites und Apps, die das Leben einfacher machen - aktuell entwickle ich <strong>WISS HUB</strong>, eine Plattform, die Studierende, Projekte und Firmen verbindet.
+                Ich bin im zweiten Lehrjahr meiner Ausbildung zum <strong>Informatiker EFZ</strong> mit Fachrichtung Applikationsentwicklung an der <strong>WISS</strong> in Zürich und komme aus dem Aargau. Aktuell arbeite ich unter anderem an <strong>WISS HUB</strong>, einer Plattform, die Studierende, Projekte und Unternehmen miteinander verbindet.
               </p>
               <p data-show="de">
-                Vor der WISS habe ich als <strong>Medientechnologe</strong> Flyer, Poster und Visitenkarten gestaltet und in <strong>Lightroom &amp; Photoshop</strong> editiert. Diese Druck-Disziplin sieht man in meinem Umgang mit Typo, Abständen und Weissraum.
+                Davor war ich im <strong>Print- und Medienbereich</strong> tätig. Dort habe ich Flyer, Poster und Visitenkarten gestaltet und mit <strong>Photoshop, Lightroom und InDesign</strong> gearbeitet. Diese Erfahrung prägt bis heute meinen Blick für Typografie, Abstände und klare Layouts.
               </p>
               <p data-show="de">
-                Daneben grosser Motorsport-Fan - F1, <strong>Max Verstappen</strong>, Red Bull - und ich fahre <strong>Simracing</strong> gegen Profis auf einem hochwertigen Simrace/Cockpit-Setup.
+                Abseits vom Code bin ich grosser <strong>Motorsport</strong>-Fan, fotografiere gerne und fahre regelmässig Simracing.
               </p>
               <p data-show="de">
-                Der Plan: ein Job bei einer <strong>grossen IT-Firma</strong>, parallel meine eigenen Projekte führen - ich will Dinge bauen, die leise helfen.
+                Mein Ziel ist, mich in der Softwareentwicklung weiterzuentwickeln und gleichzeitig eigene Projekte umzusetzen.
               </p>
             </div>
 
-            <div className="hero__aboutbox-tags">
-              <span>F1</span><span>Verstappen</span><span>Red Bull</span><span>Simracing</span><span>WISS</span><span>Lightroom</span><span>Photoshop</span><span>Print Design</span>
-            </div>
+            <p className="hero__aboutbox-tags">
+              <span data-show="en">Away from code: F1, sim racing, and a camera that's usually with me.</span>
+              <span data-show="de">Abseits vom Code: F1, Simracing und eine Kamera, die meistens dabei ist.</span>
+            </p>
 
             <div className="hero__aboutbox-cta">
               <a className="btn" href="/developer">

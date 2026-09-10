@@ -30,11 +30,11 @@ export const routes = [
     meta: {
       en: {
         title: 'Jay Patric Grenacher — JPG Portfolio',
-        description: 'Jay Patric Grenacher — software engineer and photographer from Aargau, Switzerland. WISS student, building WISS HUB and GlattTube.',
+        description: 'Jay Patric Grenacher — software developer and photographer from Aargau, Switzerland. Currently building WISS HUB and GlattTube.',
       },
       de: {
         title: 'Jay Patric Grenacher — JPG Portfolio',
-        description: 'Jay Patric Grenacher — Software Engineer und Fotograf aus dem Aargau. WISS-Student, entwickelt WISS HUB und GlattTube.',
+        description: 'Jay Patric Grenacher — Softwareentwickler und Fotograf aus dem Aargau. Entwickelt aktuell WISS HUB und GlattTube.',
       },
     },
   },

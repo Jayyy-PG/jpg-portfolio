@@ -3,16 +3,16 @@ export default function GalleryHero() {
     <>
       <section className="gal-hero">
         <div className="gal-hero__bg" aria-hidden="true">
-          <span data-parallax-y="90" data-parallax-x="-40" />
-          <span data-parallax-y="-70" data-parallax-x="50" />
-          <span data-parallax-y="50" data-parallax-s="0.1" />
+          <span data-parallax-y="40" data-parallax-x="-18" />
+          <span data-parallax-y="-30" data-parallax-x="22" />
+          <span data-parallax-y="24" />
         </div>
         <div className="shell gal-hero__inner">
-          <span className="eyebrow" data-parallax-y="-10">
+          <span className="eyebrow">
             <span data-show="en">Gallery / 2024 — 2026</span>
             <span data-show="de">Galerie / 2024 — 2026</span>
           </span>
-          <h1 className="gal-hero__title" data-parallax-y="-30" data-parallax-s="-0.04">
+          <h1 className="gal-hero__title" data-parallax-y="-12">
             <span data-show="en">
               Frames by
               <span className="gal-hero__title-logo" aria-label="JPG">

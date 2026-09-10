@@ -29,6 +29,11 @@ export default function Legal({ doc }) {
             {section.body.map((paragraph, i) => (
               <p className="legal__body" key={`${section.heading}-${i}`}>{paragraph}</p>
             ))}
+            {section.link && (
+              <p className="legal__body">
+                <a className="legal__link" href={section.link.href}>{section.link.label}</a>
+              </p>
+            )}
           </section>
         ))}
       </div>

@@ -33,7 +33,7 @@ const privacy = {
           'This website is hosted by Vercel Inc., USA, which provides the infrastructure and content delivery network used to make the website available.',
           'When you visit the website, technical information may be processed by Vercel. Depending on the request, this may include information such as your IP address, date and time of access, requested URL, referring page, browser or device information, approximate location derived from the IP address, and technical log data.',
           'This information is necessary to deliver the website, maintain the service, diagnose faults and protect the infrastructure against abuse.',
-          'I do not use this technical information for advertising, visitor profiling or behavioural tracking.',
+          'I do not use this technical information for advertising, visitor profiling or behavioral tracking.',
           "Vercel may process information in the United States and other jurisdictions in which it or its service providers operate. Vercel states that it participates in the Swiss-U.S. Data Privacy Framework for relevant transfers of personal data from Switzerland and uses appropriate legal safeguards where required.",
           "Further information about Vercel's processing practices is available in Vercel's own privacy documentation.",
         ],
@@ -77,7 +77,7 @@ const privacy = {
         heading: 'Retention',
         body: [
           'The language preference remains in your browser until you delete the website\'s stored data.',
-          'Emails are retained only for as long as reasonably necessary to respond to the enquiry and handle any related follow-up, unless a longer period is required for legal or legitimate organisational reasons.',
+          'Emails are retained only for as long as reasonably necessary to respond to the enquiry and handle any related follow-up, unless a longer period is required for legal or legitimate organizational reasons.',
           "Technical infrastructure and access data processed by Vercel is retained according to Vercel's applicable service settings, policies and legal obligations.",
         ],
       },
@@ -211,11 +211,21 @@ const imprint = {
         ],
       },
       {
-        heading: 'Copyright and third-party rights',
+        heading: 'Copyright',
         body: [
-          'Unless otherwise stated, original photographs, texts and graphics created for this website are protected by copyright and may not be reproduced, distributed or reused without permission.',
-          'Third-party names, logos, trademarks and other protected material remain the property of their respective rights holders. Technology logos are used only to identify the technologies concerned.',
+          `Unless otherwise stated, original photographs, texts, graphics, and other original content created by ${SITE.author} for this website are protected by copyright. Third-party trademarks, logos, icons, and other assets remain subject to the rights of their respective owners.`,
+          'The original content of this website may not be reproduced, distributed, or reused without permission.',
         ],
+      },
+      {
+        heading: 'Third-party trademarks and assets',
+        body: [
+          'Product names, trademarks, and logos referenced on this website are used solely to identify the technologies and tools concerned. They remain the property of their respective owners. Their mention does not imply sponsorship, affiliation, or endorsement.',
+          "Some technology icons used on this website are sourced from the Devicon project and are provided under the MIT License. The applicable license notice is included in the website's third-party notices.",
+          'Adobe, Photoshop, Lightroom, InDesign, and Premiere Pro are trademarks or registered trademarks of Adobe in the United States and/or other countries. Adobe product icons are not used on this website.',
+          'DaVinci Resolve is a trademark of Blackmagic Design Pty Ltd. No affiliation or endorsement is implied.',
+        ],
+        link: { href: '/THIRD_PARTY_NOTICES.txt', label: 'Third-party licenses' },
       },
       {
         heading: 'Liability',
@@ -252,11 +262,21 @@ const imprint = {
         ],
       },
       {
-        heading: 'Urheberrecht und Rechte Dritter',
+        heading: 'Urheberrecht',
         body: [
-          'Sofern nicht anders angegeben, sind für diese Website erstellte Original-Fotografien, Texte und Grafiken urheberrechtlich geschützt und dürfen ohne Zustimmung nicht vervielfältigt, verbreitet oder anderweitig weiterverwendet werden.',
-          'Namen, Logos, Marken und sonstiges geschütztes Material Dritter verbleiben im Eigentum der jeweiligen Rechteinhaber. Technologie-Logos dienen ausschliesslich der Kennzeichnung der betreffenden Technologien.',
+          `Sofern nicht anders angegeben, sind die von ${SITE.author} für diese Website erstellten Fotografien, Texte, Grafiken und sonstigen eigenen Inhalte urheberrechtlich geschützt. Marken, Logos, Icons und andere Inhalte Dritter unterliegen den Rechten der jeweiligen Rechteinhaber.`,
+          'Die eigenen Inhalte dieser Website dürfen ohne Zustimmung nicht vervielfältigt, verbreitet oder anderweitig weiterverwendet werden.',
         ],
+      },
+      {
+        heading: 'Drittmarken und externe Assets',
+        body: [
+          'Auf dieser Website genannte Produktnamen, Marken und Logos werden ausschliesslich zur Bezeichnung der jeweiligen Technologien und Werkzeuge verwendet. Sie bleiben Eigentum der jeweiligen Rechteinhaber. Die Nennung bedeutet keine Verbindung, Unterstützung oder Empfehlung durch die jeweiligen Unternehmen.',
+          'Einige auf dieser Website verwendete Technologie-Icons stammen aus dem Devicon-Projekt und werden unter der MIT-Lizenz verwendet. Der zugehörige Lizenzhinweis ist in den Drittanbieterhinweisen der Website enthalten.',
+          'Adobe, Photoshop, Lightroom, InDesign und Premiere Pro sind Marken oder eingetragene Marken von Adobe in den USA und/oder anderen Ländern. Adobe-Produkticons werden auf dieser Website nicht verwendet.',
+          'DaVinci Resolve ist eine Marke von Blackmagic Design Pty Ltd. Es besteht keine Verbindung oder Unterstützung durch Blackmagic Design.',
+        ],
+        link: { href: '/THIRD_PARTY_NOTICES.txt', label: 'Drittanbieter-Lizenzen' },
       },
       {
         heading: 'Haftung',

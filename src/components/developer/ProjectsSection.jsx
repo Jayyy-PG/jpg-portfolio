@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useLang } from '../../utils/lang.js';
 
-const ICONS = '/images/icons';
-
 const projects = [
   {
     id: 'wisshub',
@@ -26,14 +24,14 @@ const projects = [
       { en: 'revDSG-compliant, Row-Level-Security, EU hosting', de: 'revDSG-konform, Row-Level-Security, EU-Hosting' },
     ],
     stack: [
-      { name: 'TypeScript', icon: `${ICONS}/typescript.svg` },
-      { name: 'Next.js', icon: `${ICONS}/nextjs.svg`, invert: true },
-      { name: 'React', icon: `${ICONS}/react.svg` },
-      { name: 'Tailwind', icon: `${ICONS}/tailwindcss.svg` },
-      { name: 'PostgreSQL', icon: `${ICONS}/postgresql.svg` },
-      { name: 'Supabase', icon: `${ICONS}/supabase.svg` },
+      { name: 'TypeScript' },
+      { name: 'Next.js' },
+      { name: 'React' },
+      { name: 'Tailwind' },
+      { name: 'PostgreSQL' },
+      { name: 'Supabase' },
       { name: 'Zod' },
-      { name: 'Vercel', icon: `${ICONS}/vercel.svg`, invert: true },
+      { name: 'Vercel' },
     ],
     note: {
       en: '180+ modules · strict TypeScript · type-check, lint & tests (Vitest, Playwright) run before every deploy · Lighthouse 100 desktop / 96 mobile.',
@@ -64,11 +62,11 @@ const projects = [
       { en: 'Favorites, history, playlists & full-text search', de: 'Favoriten, Verlauf, Playlists & Volltextsuche' },
     ],
     stack: [
-      { name: 'Electron', icon: `${ICONS}/electron.svg` },
-      { name: 'React', icon: `${ICONS}/react.svg` },
-      { name: 'TypeScript', icon: `${ICONS}/typescript.svg` },
-      { name: 'Tailwind', icon: `${ICONS}/tailwindcss.svg` },
-      { name: 'SQLite', icon: `${ICONS}/sqlite.svg` },
+      { name: 'Electron' },
+      { name: 'React' },
+      { name: 'TypeScript' },
+      { name: 'Tailwind' },
+      { name: 'SQLite' },
     ],
     note: {
       en: 'Local-first desktop app · all data stays under %APPDATA% · packaged with electron-builder · FFmpeg & yt-dlp bundled.',
@@ -95,11 +93,19 @@ function ArrowIcon() {
   );
 }
 
+function GithubIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.77.6-3.36-1.18-3.36-1.18-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.35 1.08 2.92.82.09-.65.35-1.08.63-1.33-2.21-.25-4.54-1.1-4.54-4.91 0-1.08.39-1.97 1.03-2.66-.1-.25-.45-1.26.1-2.63 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.07c.85 0 1.7.11 2.5.33 1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.38.1 2.63.64.69 1.03 1.58 1.03 2.66 0 3.82-2.34 4.66-4.56 4.9.36.32.68.94.68 1.9v2.82c0 .26.18.58.69.48A10 10 0 0 0 12 2Z" />
+    </svg>
+  );
+}
+
 function Cta({ cta }) {
   if (cta.type === 'soon') {
     return (
-      <span className="btn btn--ghost project__cta-disabled">
-        <span data-show="en">Coming soon</span><span data-show="de">Bald verfügbar</span>
+      <span className="project__cta-note">
+        <span data-show="en">No public link yet</span><span data-show="de">Noch kein öffentlicher Link</span>
       </span>
     );
   }
@@ -119,20 +125,16 @@ function ProjectCard({ project, open, onToggle }) {
       <div className="project__num">{project.num}</div>
 
       {project.wip ? (
-        <div className="project__media project__media--wip" data-parallax-y="22">
+        <div className="project__media project__media--wip" data-parallax-y="14">
           <div className="project__wip">
-            <span className="project__wip-label">
-              <span data-show="en">In development</span>
-              <span data-show="de">In Entwicklung</span>
-            </span>
             <p className="project__wip-note">
-              <span data-show="en">Reveal soon</span>
-              <span data-show="de">Enthüllung folgt</span>
+              <span data-show="en">Nothing to show yet</span>
+              <span data-show="de">Noch nichts zu zeigen</span>
             </p>
           </div>
         </div>
       ) : (
-        <div className="project__media" data-parallax-y="22">
+        <div className="project__media" data-parallax-y="14">
           <image-slot
             id={`proj-${project.id}`}
             shape="rounded"
@@ -149,6 +151,10 @@ function ProjectCard({ project, open, onToggle }) {
       )}
 
       <div className="project__copy">
+        <p className="project__meta">
+          <span data-show="en">{project.tag.en}</span>
+          <span data-show="de">{project.tag.de}</span>
+        </p>
         <h3 className="project__name">
           {typeof project.name === 'string' ? project.name : (
             <>
@@ -201,14 +207,14 @@ function ProjectCard({ project, open, onToggle }) {
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m8 7-5 5 5 5" /><path d="m16 7 5 5-5 5" /><path d="m13.5 4-3 16" /></svg>
                   <span data-show="en">Stack</span><span data-show="de">Stack</span>
                 </h4>
-                <div className="project__stack">
-                  {project.stack.map((s) => (
-                    <span className="project__chip" key={s.name}>
-                      {s.icon && <img className={s.invert ? 'project__chip-icon project__chip-icon--invert' : 'project__chip-icon'} src={s.icon} alt="" loading="lazy" />}
+                <p className="project__stack">
+                  {project.stack.map((s, i) => (
+                    <span key={s.name}>
+                      {i > 0 && <span className="project__stack-sep" aria-hidden="true"> · </span>}
                       {s.name}
                     </span>
                   ))}
-                </div>
+                </p>
 
                 <h4 className="project__block-title project__block-title--sub">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /></svg>
@@ -232,7 +238,7 @@ export default function ProjectsSection() {
   return (
     <section className="projects reveal" id="projects">
       <div className="shell">
-        <div className="projects__head" data-parallax-y="-30">
+        <div className="projects__head" data-parallax-y="-10">
           <span className="eyebrow">03 / Projects</span>
           <h2 className="projects__title">
             <span data-show="en">Things I'm building.</span>
@@ -248,6 +254,18 @@ export default function ProjectsSection() {
             onToggle={() => setOpenId((cur) => (cur === project.id ? null : project.id))}
           />
         ))}
+
+        <a
+          className="projects__more"
+          href="https://github.com/Jayyy-PG"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubIcon />
+          <span data-show="en">More projects on GitHub</span>
+          <span data-show="de">Weitere Projekte auf GitHub</span>
+          <ArrowIcon />
+        </a>
       </div>
     </section>
   );

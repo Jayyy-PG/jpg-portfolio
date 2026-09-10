@@ -2,24 +2,37 @@ export default function DeveloperHero() {
   return (
     <section className="dev-hero reveal">
       <div className="shell dev-hero__grid">
-        <span className="eyebrow" data-parallax-y="-22">JPG · Developer</span>
-        <h1 className="dev-hero__title" data-parallax-y="-70" data-parallax-rx="-9" data-parallax-s="-0.03">
-          <span data-show="en">Building software<br />that make life easier.</span>
-          <span data-show="de">Software bauen,<br />das Leben vereinfacht.</span>
+        <span className="eyebrow">JPG · Developer</span>
+        <h1 className="dev-hero__title" data-parallax-y="-14">
+          <span data-show="en">Building software<br />that makes life easier.</span>
+          <span data-show="de">Software bauen,<br />die das Leben einfacher macht.</span>
         </h1>
         <div className="dev-hero__copy">
-          <p className="lead" data-parallax-y="-30" data-show="en">
-            I'm Jay — a first-year WISS student in Zürich, building websites and apps that make life easier. Below: the stack I work with, and the projects I'm shipping.
+          <p className="lead" data-show="en">
+            I'm Jay, training as an Informatiker EFZ with a specialization in Application Development. Here you'll find the technologies I work with most and some of my current projects.
           </p>
-          <p className="lead" data-parallax-y="-30" data-show="de">
-            Ich bin Jay — erstes Jahr an der WISS Zürich, ich baue Websites und Apps, die das Leben einfacher machen. Unten: der Stack, mit dem ich arbeite, und die Projekte, die ich gerade ausliefere.
+          <p className="lead" data-show="de">
+            Ich bin Jay und mache die Ausbildung zum Informatiker EFZ mit Fachrichtung Applikationsentwicklung. Hier zeige ich die Technologien, mit denen ich hauptsächlich arbeite, und einige meiner aktuellen Projekte.
           </p>
-          <div className="dev-hero__stats" data-parallax-y="50" data-parallax-rx="7">
-            <div><b>8+</b><span data-show="en">Stack technologies</span><span data-show="de">Technologien</span></div>
-            <div><b>3</b><span data-show="en">Active projects</span><span data-show="de">Aktive Projekte</span></div>
-            <div><b>1.</b><span data-show="en">Year at WISS</span><span data-show="de">Jahr an der WISS</span></div>
-            <div><b>∞</b><span data-show="en">Cans of Red Bull</span><span data-show="de">Dosen Red Bull</span></div>
-          </div>
+
+          {/* One editorial line of metadata. Separators are attached to the
+              end of each entry, so a wrap can never leave a lone dot at the
+              start of the next line. */}
+          <ul className="dev-hero__meta">
+            <li>
+              <span data-show="en">Application Development</span>
+              <span data-show="de">Applikationsentwicklung</span>
+            </li>
+
+            <li>
+              <span data-show="en">Aargau / Zurich</span>
+              <span data-show="de">Aargau / Zürich</span>
+            </li>
+            <li className="dev-hero__meta--fun">
+              <span data-show="en">∞ cans of Red Bull</span>
+              <span data-show="de">∞ Dosen Red Bull</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>

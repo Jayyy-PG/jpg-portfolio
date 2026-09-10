@@ -1,21 +1,61 @@
 const ICONS = '/images/icons';
 
-const skills = [
-  { name: 'HTML', cap: 'Markup', icon: 'html5' },
-  { name: 'CSS', cap: 'Styling', icon: 'css3' },
-  { name: 'JavaScript', cap: 'Frontend / DOM', icon: 'javascript' },
-  { name: 'React', cap: 'UI Library', icon: 'react' },
-  { name: 'Next.js', cap: 'React Framework', icon: 'nextjs', invert: true },
-  { name: 'Python', cap: 'Tooling / Backend', icon: 'python' },
-  { name: 'SQL', cap: 'Data', icon: 'mysql' },
-  { name: 'Java', cap: 'OOP', icon: 'java' },
+/**
+ * Grouped by what the tool is actually for, not rendered as one card per
+ * logo. Technical entries carry a small mark before the name; the mark is
+ * decorative, since the name next to it is the visible label.
+ *
+ * The creative row is deliberately text only. Adobe does not permit third
+ * parties to use its product icons, and an imitation would be worse than
+ * none — so those tools are named in full instead.
+ */
+const groups = [
+  {
+    key: 'development',
+    label: { en: 'Development', de: 'Entwicklung' },
+    items: [
+      { name: 'JavaScript', icon: 'javascript' },
+      { name: 'Python', icon: 'python' },
+      { name: 'Java', icon: 'java' },
+      { name: 'SQL', icon: 'mysql' },
+    ],
+  },
+  {
+    key: 'web',
+    label: { en: 'Web', de: 'Web' },
+    items: [
+      { name: 'HTML', icon: 'html5' },
+      { name: 'CSS', icon: 'css3' },
+      { name: 'React', icon: 'react' },
+      { name: 'Next.js', icon: 'nextjs', invert: true },
+    ],
+  },
+  {
+    key: 'tools',
+    label: { en: 'Tools', de: 'Tools' },
+    items: [
+      { name: 'Git', icon: 'git' },
+      { name: 'Docker', icon: 'docker' },
+    ],
+  },
+  {
+    key: 'creative',
+    label: { en: 'Creative', de: 'Gestaltung' },
+    items: [
+      { name: 'Adobe Photoshop' },
+      { name: 'Adobe Lightroom' },
+      { name: 'Adobe InDesign' },
+      { name: 'DaVinci Resolve' },
+      { name: 'Adobe Premiere Pro' },
+    ],
+  },
 ];
 
 export default function SkillsSection() {
   return (
     <section className="skills reveal">
       <div className="shell">
-        <div className="skills__head" data-parallax-y="-32" data-parallax-rx="-5">
+        <div className="skills__head" data-parallax-y="-10">
           <span className="eyebrow">02 / Stack</span>
           <h2 className="skills__title">
             <span data-show="en">Tools I use.</span>
@@ -23,36 +63,32 @@ export default function SkillsSection() {
           </h2>
         </div>
 
-        <div className="skills__grid">
-          {skills.map((skill) => (
-            <div className="skill-card" key={skill.name}>
-              <img
-                className={skill.invert ? 'skill-card__icon--invert' : undefined}
-                alt={skill.name}
-                src={`${ICONS}/${skill.icon}.svg`}
-              />
-              <span className="skill-card__name">{skill.name}</span>
-              <span className="skill-card__cap">{skill.cap}</span>
+        <dl className="stack-list">
+          {groups.map((group) => (
+            <div className="stack-row" key={group.key}>
+              <dt className="stack-row__label">
+                <span data-show="en">{group.label.en}</span>
+                <span data-show="de">{group.label.de}</span>
+              </dt>
+              <dd className="stack-row__items">
+                {group.items.map((item) => (
+                  <span className="stack-item" key={item.name}>
+                    {item.icon && (
+                      <img
+                        className={item.invert ? 'stack-item__icon stack-item__icon--invert' : 'stack-item__icon'}
+                        src={`${ICONS}/${item.icon}.svg`}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                    {item.name}
+                  </span>
+                ))}
+              </dd>
             </div>
           ))}
-        </div>
-
-        <div className="skills__extra">
-          <span><strong data-show="en">Also:</strong><strong data-show="de">Auch:</strong></span>
-          <span className="chip">Git</span>
-          <span className="chip">Docker</span>
-        </div>
-        <div className="skills__extra">
-          <span>
-            <strong data-show="en">Video &amp; Photo Editing:</strong>
-            <strong data-show="de">Video- &amp; Bildbearbeitung:</strong>
-          </span>
-          <span className="chip">Photoshop</span>
-          <span className="chip">DaVinci Resolve</span>
-          <span className="chip">Lightroom</span>
-          <span className="chip">InDesign</span>
-          <span className="chip">Premiere</span>
-        </div>
+        </dl>
       </div>
     </section>
   );

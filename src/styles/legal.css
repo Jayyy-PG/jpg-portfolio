@@ -75,6 +75,18 @@
   overflow-wrap: anywhere;
 }
 
+.legal__link {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(255, 122, 61, 0.35);
+  padding-bottom: 1px;
+  text-decoration: none;
+}
+
+.legal__link:hover {
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
 @media (max-width: 720px) {
   .legal { padding: 64px 0 88px; }
   .legal__section { margin-top: 34px; }

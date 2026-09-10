@@ -1,28 +1,21 @@
 import { useLang } from '../../utils/lang.js';
 
-const ICONS = '/images/icons';
-
-const stackPreview = [
-  { name: 'HTML', label: 'HTML', icon: 'html5' },
-  { name: 'CSS', label: 'CSS', icon: 'css3' },
-  { name: 'JavaScript', label: 'JS', icon: 'javascript' },
-  { name: 'Python', label: 'Python', icon: 'python' },
-];
+const stackPreview = ['HTML', 'CSS', 'JavaScript', 'Python'];
 
 const photoStack = [
   {
     id: 'photo-feat-a', modifier: 'a', src: '/images/gallery/thumbnails/night-run.webp',
-    aspect: '4/5', placeholder: 'Photo', y: '60', r: '-2.6',
+    aspect: '4/5', placeholder: 'Photo', y: '18', r: '-1.2',
     alt: { en: 'Runner at night.', de: 'Läufer bei Nacht.' },
   },
   {
     id: 'photo-feat-b', modifier: 'b', src: '/images/gallery/thumbnails/photo-preview-b.webp',
-    aspect: '3/4', placeholder: 'Photo', y: '110', r: '3.6',
+    aspect: '3/4', placeholder: 'Photo', y: '26', r: '1.6',
     alt: { en: 'Photograph from the gallery.', de: 'Aufnahme aus der Galerie.' },
   },
   {
     id: 'photo-feat-c', modifier: 'c', src: '/images/gallery/thumbnails/photo-preview-c.webp',
-    aspect: '5/4', placeholder: 'Photo', y: '160', r: '-4.6',
+    aspect: '5/4', placeholder: 'Photo', y: '34', r: '-2',
     alt: { en: 'Photograph from the gallery.', de: 'Aufnahme aus der Galerie.' },
   },
 ];
@@ -39,14 +32,13 @@ function ArrowIcon() {
 function CodeCard() {
   return (
     <pre className="codecard__body">
-      <span className="c-c">// shipping things that help people.</span>{'\n'}
-      <span className="c-k">const</span>{' '}<span className="c-v">jpg</span>{' = {\n  '}
-      <span className="c-p">stack</span>{': ['}
-      <span className="c-s">"HTML"</span>{', '}<span className="c-s">"CSS"</span>{', '}
-      <span className="c-s">"JS"</span>{', '}<span className="c-s">"Python"</span>{'],\n  '}
-      <span className="c-p">building</span>{': '}<span className="c-s">"WISS HUB"</span>{',\n  '}
-      <span className="c-p">loves</span>{': ['}
-      <span className="c-s">"clean UI"</span>{', '}<span className="c-s">"calm code"</span>{'],\n'}
+      <span className="c-c">// code, cameras, and where it started</span>{'\n'}
+      <span className="c-k">const</span>{' '}<span className="c-v">jay</span>{' = {\n  '}
+      <span className="c-p">building</span>{': ['}
+      <span className="c-s">"WISS HUB"</span>{', '}<span className="c-s">"GlattTube"</span>{'],\n  '}
+      <span className="c-p">shoots</span>{': ['}
+      <span className="c-s">"motorsport"</span>{', '}<span className="c-s">"portraits"</span>{'],\n  '}
+      <span className="c-p">background</span>{': '}<span className="c-s">"print & media design"</span>{',\n'}
       {'};'}
     </pre>
   );
@@ -61,39 +53,39 @@ export default function FeaturedProjects() {
 
       <section className="section section--coding reveal" id="coding">
         <div className="shell section__grid">
-          <div className="section__num" data-parallax-y="-12">01 / 04</div>
-          <h2 className="section__title" data-parallax-y="-26">
+          <div className="section__num">01 / 04</div>
+          <h2 className="section__title" data-parallax-y="-10">
             <span data-show="en">Code &amp; Craft</span>
             <span data-show="de">Code &amp; Handwerk</span>
           </h2>
-          <p className="section__lead" data-parallax-y="-14">
+          <p className="section__lead">
             <span data-show="en">Full-Stack Developer · Website Designer · Builder of small useful things.</span>
             <span data-show="de">Full-Stack Entwickler · Webdesigner · Baut kleine nützliche Dinge.</span>
           </p>
 
           <div className="section__media">
-            <div className="codecard" data-parallax-y="90" data-parallax-r="-2.4">
+            <div className="codecard" data-parallax-y="22" data-parallax-r="-1">
               <div className="codecard__chrome">
                 <span /><span /><span />
-                <i>jpg.dev — wiss-hub</i>
+                <i>jpg.dev — jay.js</i>
               </div>
               <CodeCard />
-              <div className="codecard__chips">
-                <span className="chip">Full-Stack</span>
-                <span className="chip">Web Design</span>
-                <span className="chip">UX</span>
-                <span className="chip">Tooling</span>
-              </div>
             </div>
           </div>
 
-          <div className="section__skills" aria-label="Stack preview">
-            {stackPreview.map((item) => (
-              <div className="skill" key={item.name}>
-                <img alt={item.name} src={`${ICONS}/${item.icon}.svg`} />
-                <span>{item.label}</span>
-              </div>
-            ))}
+          <div className="section__skills">
+            <span className="section__skills-label">
+              <span data-show="en">Working with</span>
+              <span data-show="de">Aktuell im Einsatz</span>
+            </span>
+            <p className="section__skills-list">
+              {stackPreview.map((name, i) => (
+                <span key={name}>
+                  {i > 0 && <span className="section__skills-sep" aria-hidden="true"> · </span>}
+                  {name}
+                </span>
+              ))}
+            </p>
           </div>
 
           <div className="section__cta">
@@ -112,14 +104,14 @@ export default function FeaturedProjects() {
 
       <section className="section section--photo reveal" id="photo">
         <div className="shell section__grid">
-          <div className="section__num" data-parallax-y="-12">02 / 04</div>
-          <h2 className="section__title" data-parallax-y="-26">
+          <div className="section__num">02 / 04</div>
+          <h2 className="section__title" data-parallax-y="-10">
             <span data-show="en">Through the lens</span>
             <span data-show="de">Durch die Linse</span>
           </h2>
-          <p className="section__lead" data-parallax-y="-14">
-            <span data-show="en">Motorsport, nature &amp; portraits. Shot, edited &amp; framed by JPG — the file format and the photographer.</span>
-            <span data-show="de">Motorsport, Natur &amp; Porträts. Fotografiert, bearbeitet und gerahmt von JPG — das Dateiformat und der Fotograf.</span>
+          <p className="section__lead">
+            <span data-show="en">Motorsport, nature, and portraits. Shot and edited by me — JPG stands for both the file format and my initials.</span>
+            <span data-show="de">Motorsport, Natur und Porträts. Fotografiert und bearbeitet von mir — JPG steht dabei zugleich für das Dateiformat und meine Initialen.</span>
           </p>
 
           <div className="section__media photo-stack">

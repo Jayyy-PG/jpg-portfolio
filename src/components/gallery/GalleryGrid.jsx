@@ -87,7 +87,7 @@ export default function GalleryGrid({ onOpen }) {
       <div className="shell">
         {gallerySections.map((section, sectionIndex) => (
           <div className="gal-section" key={section.title.en}>
-            <header className="gal-row-head reveal" data-parallax-y="-14">
+            <header className="gal-row-head reveal">
               <div className="gal-row-head__num">
                 {String(sectionIndex + 1).padStart(2, '0')} / {String(gallerySections.length).padStart(2, '0')}
               </div>
